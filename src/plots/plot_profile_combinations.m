@@ -1,0 +1,11 @@
+plot_multiple_panels(settings, 'updraftBuoyancy', 4);
+plot_multiple_panels(settings, 'updraftFraction', 4);
+plot_multiple_panels(settings, 'verticalVelocity', 4);
+plot_multiple_panels(settings, 'resolvedMoistureFlux', 4);
+plot_multiple_panels(settings, 'resolvedVapourFlux', 4);
+plot_multiple_panels(settings, 'resolvedLiquidFlux', 4);
+plot_multiple_panels(settings, 'resolvedTemperatureFluxes', 4);
+plot_multiple_panels(settings, 'resolvedTemperatureMoistFluxes', 4);
+plot_multiple_panels(settings, 'subgridTemperatureFluxes', 4);
+plot_multiple_panels(settings, 'subgridTemperatureMoistFluxes', 4);
+plot_multiple_panels(settings, 'additionalForcing', 4);
