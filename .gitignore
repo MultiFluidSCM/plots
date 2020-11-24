@@ -1,0 +1,15 @@
+# Do not upload images and figures as these can be compiled by the user
+*.fig
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp4
+
+# Do not upload compiled LaTeX files
+*.aux
+*.bbl
+*.blg
+*.log
+*.synctex.gz
+*.pdf
