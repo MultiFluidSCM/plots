@@ -15,7 +15,7 @@ title('Tot cld cov','fontsize',settings.fs)
 set(gca,'fontsize',settings.fs,'XTick',[1:14])
 %pause
 
-saveas(fig, fullfile(folders.images, "timeseries_cloud_cover.png"));
+saveas(fig, fullfile(settings.folders.images, "timeseries_cloud_cover.png"));
 
 
 fig = figure(4);
@@ -32,4 +32,4 @@ title('Cloud base/top','fontsize',settings.fs)
 set(gca,'fontsize',settings.fs,'XTick',[1:14])
 %pause
 
-saveas(fig, fullfile(folders.images, "timeseries_cloud_height.png"));
+saveas(fig, fullfile(settings.folders.images, "timeseries_cloud_height.png"));

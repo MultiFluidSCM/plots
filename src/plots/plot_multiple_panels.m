@@ -1,17 +1,15 @@
-function plot_multiple_panels(settings, name, total)
-    profiles_to_plot = {};
-    for i=1:total
-        file_figure = join([name, '_', num2str(i), '.fig'],"");
-        file_figure = fullfile(settings.folders.figures, file_figure);
-        profiles_to_plot{end+1} = file_figure;
-    end
-
+function plot_multiple_panels(settings, name, profiles_to_plot, n_columns)
+    n_plots = length(profiles_to_plot);
+    n_rows = ceil(n_plots/n_columns);
+    
     %%New figure 
     f = figure(5); 
     clf('reset')
-    for i=1:length(profiles_to_plot)
+    for i=1:n_plots
+        row = ceil(i/n_columns);
+        column = mod(i, n_columns);
 
-        a2 = subplot(1,total,i); 
+        a2 = subplot(n_rows,n_columns,i); 
         % Open exiting figure 
         f_c = openfig(profiles_to_plot{i}); 
         % Identify axes to be copied 
@@ -35,14 +33,22 @@ function plot_multiple_panels(settings, name, total)
         set(a2,'title',get(axes_to_be_copied,'title'))
         set(a2,'xlabel',get(axes_to_be_copied,'xlabel'))
         set(a2,'ylabel',get(axes_to_be_copied,'ylabel'))
+        % Prevent tick labels and axes from being covered up
+        set(a2, 'Layer', 'top')
         view(a2,[az,el]) 
+        
+        
+        
         % One may set other properties such as labels, ticks etc. using the same 
         % idea 
         % Close the figure 
         close(f_c);
     end
-
-    set(f,'position',[0,0,total*200,300]);
+    
+    set(f,'position',[0,0,n_columns*300,n_rows*300]);
+    
+    
+    
     file_output = join([name, '_all'],"");
     save_figure(settings, f, file_output);
 end
