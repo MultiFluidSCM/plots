@@ -11,18 +11,23 @@ load_scm_data
 % Book-keeping and extra variables
 additional_diagnostics
 
-% Plot each profile for each saved time
-plot_individual_profiles
+if settings.save_figures | settings.save_images
+    % Plot each profile for each saved time
+    plot_individual_profiles
 
-% Combine individual profiles for multi-panel plots
-plot_profile_combinations
-
-% Plot variable changes over time
-plot_timeseries
+    % Combine individual profiles for multi-panel plots
+    % Requires .fig files to be imported
+    if settings.save_figures
+        plot_profile_combinations
+    end
+end
 
 if settings.plot_original_figures
     plot_mean_profiles
     plot_higher_moments
 end
+
+% Plot variable changes over time
+plot_timeseries
 
 end
