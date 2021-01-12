@@ -1,3 +1,4 @@
+
 % Time series
 fig = figure(3);
 set(gcf,'Position',[440 432 765 366])
@@ -15,8 +16,8 @@ title('Tot cld cov','fontsize',settings.fs)
 set(gca,'fontsize',settings.fs,'XTick',[1:14])
 %pause
 
-saveas(fig, fullfile(settings.folders.images, "timeseries_cloud_cover.png"));
-
+% saveas(fig, fullfile(settings.folders.images, "timeseries_cloud_cover.png"));
+save_figure(settings, fig, "timeseries_cloud_cover");
 
 fig = figure(4);
 set(gcf,'Position',[440 432 765 366])
@@ -32,4 +33,152 @@ title('Cloud base/top','fontsize',settings.fs)
 set(gca,'fontsize',settings.fs,'XTick',[1:14])
 %pause
 
-saveas(fig, fullfile(settings.folders.images, "timeseries_cloud_height.png"));
+% saveas(fig, fullfile(settings.folders.images, "timeseries_cloud_height.png"));
+save_figure(settings, fig, "timeseries_cloud_height");
+
+if exist('SCM_cbase_sigma2')
+    fig = figure(1);
+    set(gcf,'Position',[440 432 765 366])
+    subplot(1,1,1)
+
+    % Cloud top and base
+    plot(SCM_time_ser_hours,SCM_cbase_sigma2,'r--')
+    xlabel('Time','fontsize',settings.fs)
+    ylabel('\sigma_2','fontsize',settings.fs)
+    title('Cloud base value','fontsize',settings.fs)
+    set(gca,'fontsize',settings.fs,'XTick',[1:14])
+    
+    save_figure(settings, fig, "timeseries_cbase_sigma2");
+end
+
+if exist('SCM_cbase_w')
+    fig = figure(1);
+    set(gcf,'Position',[440 432 765 366])
+    subplot(1,1,1)
+
+    % Cloud top and base
+    plot(SCM_time_ser_hours,SCM_cbase_w,'k--',...
+         SCM_time_ser_hours,SCM_cbase_w1,'b--',...
+         SCM_time_ser_hours,SCM_cbase_w2,'r--')
+    xlabel('Time','fontsize',settings.fs)
+    ylabel('w','fontsize',settings.fs)
+    title('Cloud base value','fontsize',settings.fs)
+    set(gca,'fontsize',settings.fs,'XTick',[1:14])
+    
+    save_figure(settings, fig, "timeseries_cbase_w");
+end
+
+if exist('SCM_cbase_q')
+    fig = figure(1);
+    set(gcf,'Position',[440 432 765 366])
+    subplot(1,1,1)
+
+    % Cloud top and base
+    plot(SCM_time_ser_hours,SCM_cbase_q,'k--',...
+         SCM_time_ser_hours,SCM_cbase_q1,'b--',...
+         SCM_time_ser_hours,SCM_cbase_q2,'r--')
+    xlabel('Time','fontsize',settings.fs)
+    ylabel('q','fontsize',settings.fs)
+    title('Cloud base value','fontsize',settings.fs)
+    set(gca,'fontsize',settings.fs,'XTick',[1:14])
+    
+    save_figure(settings, fig, "timeseries_cbase_q");
+end
+
+if exist('SCM_cbase_eta1')
+    fig = figure(1);
+    set(gcf,'Position',[440 432 765 366])
+    subplot(1,1,1)
+
+    % Cloud top and base
+    plot(SCM_time_ser_hours,SCM_cbase_eta1,'b--',...
+         SCM_time_ser_hours,SCM_cbase_eta2,'r--')
+    xlabel('Time','fontsize',settings.fs)
+    ylabel('\eta','fontsize',settings.fs)
+    title('Cloud base value','fontsize',settings.fs)
+    set(gca,'fontsize',settings.fs,'XTick',[1:14])
+    
+    save_figure(settings, fig, "timeseries_cbase_eta");
+end
+
+if exist('SCM_cbase_tke1')
+    fig = figure(1);
+    set(gcf,'Position',[440 432 765 366])
+    subplot(1,1,1)
+
+    % Cloud top and base
+    plot(SCM_time_ser_hours,SCM_cbase_tke1,'b--',...
+         SCM_time_ser_hours,SCM_cbase_tke2,'r--')
+    xlabel('Time','fontsize',settings.fs)
+    ylabel('TKE','fontsize',settings.fs)
+    title('Cloud base value','fontsize',settings.fs)
+    set(gca,'fontsize',settings.fs,'XTick',[1:14])
+    
+    save_figure(settings, fig, "timeseries_cbase_tke");
+end
+
+if exist('SCM_cbase_wq_res1')
+    fig = figure(1);
+    set(gcf,'Position',[440 432 765 366])
+    subplot(1,1,1)
+
+    % Cloud top and base
+    plot(SCM_time_ser_hours,SCM_cbase_wq_res1,'b--',...
+         SCM_time_ser_hours,SCM_cbase_wq_res2,'r--')
+    xlabel('Time','fontsize',settings.fs)
+    ylabel("Resolved \overline{w'q'}",'fontsize',settings.fs)
+    title('Cloud base value','fontsize',settings.fs)
+    set(gca,'fontsize',settings.fs,'XTick',[1:14])
+    
+    save_figure(settings, fig, "timeseries_cbase_wq_res");
+end
+
+if exist('SCM_cbase_wq_sg1')
+    fig = figure(1);
+    set(gcf,'Position',[440 432 765 366])
+    subplot(1,1,1)
+
+    % Cloud top and base
+    plot(SCM_time_ser_hours,SCM_cbase_wq_sg1,'b--',...
+         SCM_time_ser_hours,SCM_cbase_wq_sg2,'r--')
+    xlabel('Time','fontsize',settings.fs)
+    ylabel("Subgrid \overline{w'q'}",'fontsize',settings.fs)
+    title('Cloud base value','fontsize',settings.fs)
+    set(gca,'fontsize',settings.fs,'XTick',[1:14])
+    
+    save_figure(settings, fig, "timeseries_cbase_wq_sg");
+end
+
+if exist('SCM_cbase_relabel_M12')
+    fig = figure(1);
+    set(gcf,'Position',[440 432 765 366])
+    subplot(1,1,1)
+
+    % Cloud top and base
+    plot(SCM_time_ser_hours,SCM_cbase_relabel_M12,'k--',...
+         SCM_time_ser_hours,SCM_cbase_relabel_M12_sort,'c--',...
+         SCM_time_ser_hours,SCM_cbase_relabel_M12_mix,'m--')
+    xlabel('Time','fontsize',settings.fs)
+    ylabel("Detrainment",'fontsize',settings.fs)
+    title('Cloud base value','fontsize',settings.fs)
+    set(gca,'fontsize',settings.fs,'XTick',[1:14])
+    
+    save_figure(settings, fig, "timeseries_cbase_M12");
+end
+
+if exist('SCM_cbase_relabel_M21')
+    fig = figure(1);
+    set(gcf,'Position',[440 432 765 366])
+    subplot(1,1,1)
+
+    % Cloud top and base
+    plot(SCM_time_ser_hours,SCM_cbase_relabel_M21,'k--',...
+         SCM_time_ser_hours,SCM_cbase_relabel_M21_instab,'c--',...
+         SCM_time_ser_hours,SCM_cbase_relabel_M21_mix,'m--')
+    xlabel('Time','fontsize',settings.fs)
+    ylabel("Entrainment",'fontsize',settings.fs)
+    title('Cloud base value','fontsize',settings.fs)
+    set(gca,'fontsize',settings.fs,'XTick',[1:14])
+    
+    save_figure(settings, fig, "timeseries_cbase_M21");
+end

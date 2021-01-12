@@ -25,7 +25,8 @@ for kt = 1:length(time_s)
     hold on
     plot(sigma2(:,kt),z,'r',SCM_sigma2(:,kt),SCM_zp,'r--')
     hold off
-    xlim([0,0.5])
+    % xlim([0,0.5])
+    xlim([0,1])
     ylim([0,settings.zplottop])
     xlabel('sigma 2','fontsize',settings.fs)
     ylabel(' z(m) ','fontsize',settings.fs)
@@ -262,52 +263,67 @@ for kt = 1:length(time_s)
     save_figure(settings, fig, filename);
     
     % Resolved moisture fluxes
-    fig = figure(1);
-    clf('reset')
-    subplot(1,1,1)
-    indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
-    hold on
-    plot(wqv_res1(:,kt),z,'b',1e6*SCM_wq_res1(:,kt),SCM_zw,'b--',...
-         wqv_res2(:,kt),z,'r',1e6*SCM_wq_res1(:,kt),SCM_zw,'r--')
-    hold off
-    xlim([-1e2,5e2])
-    ylim([0,settings.zplottop])
-    xlabel('qv flux res','fontsize',settings.fs)
-    ylabel(' z(m) ','fontsize',settings.fs)
-    title([num2str(t_hours),' hours'],'fontsize',settings.fs)
-    set(gca,'fontsize',settings.fs)
-    set(gcf,'position',[10,10,500,500]);
-    filename = join(["resolvedMoistureFluxes_",num2str(kt)], "");
-    save_figure(settings, fig, filename);
+    if exist('wqv_res1') & exist('SCM_wq_res1')
+        fig = figure(1);
+        clf('reset')
+        subplot(1,1,1)
+        indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
+        hold on
+        plot(wqv_res1(:,kt),z,'b',SCM_wq_res1(:,kt),SCM_zw,'b--',...
+             wqv_res2(:,kt),z,'r',SCM_wq_res2(:,kt),SCM_zw,'r--')
+        hold off
+        xlim([-5e2,5e2])
+        ylim([0,settings.zplottop])
+        xlabel('qv flux res','fontsize',settings.fs)
+        ylabel(' z(m) ','fontsize',settings.fs)
+        title([num2str(t_hours),' hours'],'fontsize',settings.fs)
+        set(gca,'fontsize',settings.fs)
+        set(gcf,'position',[10,10,500,500]);
+        filename = join(["resolvedMoistureFluxes_",num2str(kt)], "");
+        save_figure(settings, fig, filename);
+    end
     
     % Subgrid moisture fluxes
-    fig = figure(1);
-    clf('reset')
-    q1 = SCM_q_1(:,kt);
-    ddz_q1(1) = 0;
-    ddz_q1(2:length(SCM_zw)) = (q1(2:length(SCM_zw)) - q1(1:length(SCM_zw)-1));
-    %ddz_q1(length(SCM_zw)) = 0;
-    q2 = SCM_q_2(:,kt);
-    ddz_q2(1) = 0;
-    ddz_q2(2:length(SCM_zw)) = (q2(2:length(SCM_zw)) - q2(1:length(SCM_zw)-1));
-    %ddz_q1(length(SCM_zw)) = 0;
-    subplot(1,1,1)
-    indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
-    hold on
-    plot(wqv_sg1(:,kt),z,'b',1e8*SCM_wq_sg1(:,kt),SCM_zw,'b--',...
-         wqv_sg2(:,kt),z,'r',1e8*SCM_wq_sg2(:,kt),SCM_zw,'r--')
-%     plot(wqv_sg1(:,kt),z,'b',1e3*ddz_q1(:,kt),SCM_zw,'b--',...
-%          wqv_sg2(:,kt),z,'r',1e3*ddz_q2(:,kt),SCM_zw,'r--')
-    hold off
-    xlim([-1e2,5e2])
-    ylim([0,settings.zplottop])
-    xlabel('qv flux sg','fontsize',settings.fs)
-    ylabel(' z(m) ','fontsize',settings.fs)
-    title([num2str(t_hours),' hours'],'fontsize',settings.fs)
-    set(gca,'fontsize',settings.fs)
-    set(gcf,'position',[10,10,500,500]);
-    filename = join(["subgridMoistureFluxes_",num2str(kt)], "");
-    save_figure(settings, fig, filename);
+    if exist('wqv_sg1') & exist('SCM_wq_sg1')
+        fig = figure(1);
+        clf('reset')
+        subplot(1,1,1)
+        indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
+        hold on
+        plot(wqv_sg1(:,kt),z,'b',SCM_wq_sg1(:,kt),SCM_zw,'b--',...
+             wqv_sg2(:,kt),z,'r',SCM_wq_sg2(:,kt),SCM_zw,'r--')
+        hold off
+        xlim([-3e2,3e2])
+        ylim([0,settings.zplottop])
+        xlabel('qv flux sg','fontsize',settings.fs)
+        ylabel(' z(m) ','fontsize',settings.fs)
+        title([num2str(t_hours),' hours'],'fontsize',settings.fs)
+        set(gca,'fontsize',settings.fs)
+        set(gcf,'position',[10,10,500,500]);
+        filename = join(["subgridMoistureFluxes_",num2str(kt)], "");
+        save_figure(settings, fig, filename);
+    end
+    
+    % Total moisture fluxes
+    if exist('wqv_res1') & exist('SCM_wq_res1') & exist('wqv_sg1') & exist('SCM_wq_sg1')
+        fig = figure(1);
+        clf('reset')
+        subplot(1,1,1)
+        indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
+        hold on
+        plot(wqv_res1(:,kt)+wqv_res2(:,kt)+wqv_sg1(:,kt)+wqv_sg2(:,kt),z,'k',...
+             SCM_wq_res1(:,kt)+SCM_wq_res2(:,kt)+SCM_wq_sg1(:,kt)+SCM_wq_sg2(:,kt),SCM_zw,'k--')
+        hold off
+        xlim([-1e2,8e2])
+        ylim([0,settings.zplottop])
+        xlabel('qv flux total','fontsize',settings.fs)
+        ylabel(' z(m) ','fontsize',settings.fs)
+        title([num2str(t_hours),' hours'],'fontsize',settings.fs)
+        set(gca,'fontsize',settings.fs)
+        set(gcf,'position',[10,10,500,500]);
+        filename = join(["totalMoistureFluxes_",num2str(kt)], "");
+        save_figure(settings, fig, filename);
+    end
 
     % Resolved pot. temperature fluxes
     fig = figure(1);
@@ -386,24 +402,25 @@ for kt = 1:length(time_s)
     save_figure(settings, fig, filename);
     
     % Additional forcing term for entropy
-    fig = figure(1);
-    clf('reset')
-    subplot(1,1,1)
-    indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
-    hold on
-    plot(SCM_EXTRA_FORCING_1(:,kt),SCM_zw,'b--',...
-         SCM_EXTRA_FORCING_2(:,kt),SCM_zw,'r--')
-    hold off
-    xlim([-0.1,0.05])
-    ylim([0,settings.zplottop])
-    xlabel('additional forcing','fontsize',settings.fs)
-    ylabel(' z(m) ','fontsize',settings.fs)
-    title([num2str(t_hours),' hours'],'fontsize',settings.fs)
-    set(gca,'fontsize',settings.fs)
-    set(gcf,'position',[10,10,500,500]);
-    filename = join(["additionalForcing_",num2str(kt)], "");
-    save_figure(settings, fig, filename);
-    
+    if exist('SCM_EXTRA_FORCING_1')
+        fig = figure(1);
+        clf('reset')
+        subplot(1,1,1)
+        indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
+        hold on
+        plot(SCM_EXTRA_FORCING_1(:,kt),SCM_zw,'b--',...
+             SCM_EXTRA_FORCING_2(:,kt),SCM_zw,'r--')
+        hold off
+        xlim([-0.1,0.05])
+        ylim([0,settings.zplottop])
+        xlabel('additional forcing','fontsize',settings.fs)
+        ylabel(' z(m) ','fontsize',settings.fs)
+        title([num2str(t_hours),' hours'],'fontsize',settings.fs)
+        set(gca,'fontsize',settings.fs)
+        set(gcf,'position',[10,10,500,500]);
+        filename = join(["additionalForcing_",num2str(kt)], "");
+        save_figure(settings, fig, filename);
+    end
     
     
     

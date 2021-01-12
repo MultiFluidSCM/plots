@@ -2,12 +2,15 @@ plot_timeseries_panels(settings, 'updraftBuoyancy', 4);
 plot_timeseries_panels(settings, 'updraftFraction', 4);
 plot_timeseries_panels(settings, 'verticalVelocity', 4);
 plot_timeseries_panels(settings, 'resolvedMoistureFlux', 4);
+plot_timeseries_panels(settings, 'resolvedMoistureFluxes', 4);
 plot_timeseries_panels(settings, 'resolvedVapourFlux', 4);
 plot_timeseries_panels(settings, 'resolvedLiquidFlux', 4);
 plot_timeseries_panels(settings, 'resolvedTemperatureFluxes', 4);
 plot_timeseries_panels(settings, 'resolvedTemperatureMoistFluxes', 4);
 plot_timeseries_panels(settings, 'subgridTemperatureFluxes', 4);
 plot_timeseries_panels(settings, 'subgridTemperatureMoistFluxes', 4);
+plot_timeseries_panels(settings, 'subgridMoistureFluxes', 4);
+plot_timeseries_panels(settings, 'totalMoistureFluxes', 4);
 plot_timeseries_panels(settings, 'additionalForcing', 4);
 
 for i = 1:length(time_s)

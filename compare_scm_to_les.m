@@ -8,6 +8,7 @@ function compare_scm_to_les(settings)
 load_les_data
 load_scm_data
 
+% Generic comment
 % Book-keeping and extra variables
 additional_diagnostics
 
