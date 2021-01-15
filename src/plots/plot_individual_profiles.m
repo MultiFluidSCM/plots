@@ -293,7 +293,7 @@ for kt = 1:length(time_s)
         plot(wqv_sg1(:,kt),z,'b',SCM_wq_sg1(:,kt),SCM_zw,'b--',...
              wqv_sg2(:,kt),z,'r',SCM_wq_sg2(:,kt),SCM_zw,'r--')
         hold off
-        xlim([-3e2,3e2])
+        xlim([-5e2,5e2])
         ylim([0,settings.zplottop])
         xlabel('qv flux sg','fontsize',settings.fs)
         ylabel(' z(m) ','fontsize',settings.fs)
@@ -322,6 +322,48 @@ for kt = 1:length(time_s)
         set(gca,'fontsize',settings.fs)
         set(gcf,'position',[10,10,500,500]);
         filename = join(["totalMoistureFluxes_",num2str(kt)], "");
+        save_figure(settings, fig, filename);
+    end
+    
+    % Resolved potential temperature fluxes
+    if exist('wth_res1') & exist('SCM_wth_res1')
+        fig = figure(1);
+        clf('reset')
+        subplot(1,1,1)
+        indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
+        hold on
+        plot(wth_res1(:,kt),z,'b',SCM_wth_res1(:,kt),SCM_zw,'b--',...
+             wth_res2(:,kt),z,'r',SCM_wth_res2(:,kt),SCM_zw,'r--')
+        hold off
+        xlim([-8e1,8e1])
+        ylim([0,settings.zplottop])
+        xlabel('qth flux res','fontsize',settings.fs)
+        ylabel(' z(m) ','fontsize',settings.fs)
+        title([num2str(t_hours),' hours'],'fontsize',settings.fs)
+        set(gca,'fontsize',settings.fs)
+        set(gcf,'position',[10,10,500,500]);
+        filename = join(["resolvedThetaFluxes_",num2str(kt)], "");
+        save_figure(settings, fig, filename);
+    end
+    
+    % Subgrid potential temperature fluxes
+    if exist('wth_sg1') & exist('SCM_wth_sg1')
+        fig = figure(1);
+        clf('reset')
+        subplot(1,1,1)
+        indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
+        hold on
+        plot(wth_sg1(:,kt),z,'b',SCM_wth_sg1(:,kt),SCM_zw,'b--',...
+             wth_sg2(:,kt),z,'r',SCM_wth_sg2(:,kt),SCM_zw,'r--')
+        hold off
+        xlim([-8e1,8e1])
+        ylim([0,settings.zplottop])
+        xlabel('qth flux sg','fontsize',settings.fs)
+        ylabel(' z(m) ','fontsize',settings.fs)
+        title([num2str(t_hours),' hours'],'fontsize',settings.fs)
+        set(gca,'fontsize',settings.fs)
+        set(gcf,'position',[10,10,500,500]);
+        filename = join(["subgridThetaFluxes_",num2str(kt)], "");
         save_figure(settings, fig, filename);
     end
 
