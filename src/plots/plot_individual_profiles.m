@@ -619,4 +619,49 @@ for kt = 1:length(time_s)
     set(gcf,'position',[10,10,500,500]);
     filename = join(["subgridMixingRatioVar_",num2str(kt)], "");
     save_figure(settings, fig, filename);
+    
+    if exist('SCM_m1_transport')
+        who
+        nz = length(z)-1;
+        nzp = length(z);
+        
+        F1(1) = 0;
+        F2(1) = 0;
+        for k = 2:nz
+            if w_1(k) > 0
+                F1(k) = w_1(k)*m_1(k-1);
+            else
+                F1(k) = w_1(k)*m_1(k);
+            end
+            if w_2(k) > 0
+                F2(k) = w_2(k)*m_2(k-1);
+            else
+                F2(k) = w_2(k)*m_2(k);
+            end
+        end
+        F(nzp) = 0;
+        
+        % Mass tendencies from LES
+        dz = z(2:nzp) - z(1:nz);
+        LES_m1_transport = - (F1(2:nzp) - F1(1:nz))./dz;
+        LES_m2_transport = - (F2(2:nzp) - F2(1:nz))./dz;
+    
+        fig = figure(1);
+        clf('reset')
+        subplot(1,1,1)
+        indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
+        hold on
+        plot(LES_m1_transport(:,kt),0.5*(z(1:nz)+z(2:nzp)),'b',SCM_m1_transport(:,kt),SCM_zp,'b--',...
+             LES_m2_transport(:,kt),0.5*(z(1:nz)+z(2:nzp)),'r',SCM_m2_transport(:,kt),SCM_zp,'r--')
+        hold off
+        xlim([-2e-3,2e-3])
+        ylim([0,settings.zplottop])
+        xlabel('Fluid transport','fontsize',settings.fs)
+        ylabel(' z(m) ','fontsize',settings.fs)
+        title([num2str(t_hours),' hours'],'fontsize',settings.fs)
+        set(gca,'fontsize',settings.fs)
+        set(gcf,'position',[10,10,500,500]);
+        filename = join(["transport_",num2str(kt)], "");
+        save_figure(settings, fig, filename);
+    end
 end
