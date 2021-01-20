@@ -621,30 +621,30 @@ for kt = 1:length(time_s)
     save_figure(settings, fig, filename);
     
     if exist('SCM_m1_transport')
-        who
+        % who
         nz = length(z)-1;
         nzp = length(z);
         
         F1(1) = 0;
         F2(1) = 0;
         for k = 2:nz
-            if w_1(k) > 0
-                F1(k) = w_1(k)*m_1(k-1);
+            if w_1(:,kt,k) > 0
+                F1(k) = w_1(:,kt,k)*sigma1(:,kt,k-1);
             else
-                F1(k) = w_1(k)*m_1(k);
+                F1(k) = w_1(:,kt,k)*sigma1(:,kt,k);
             end
-            if w_2(k) > 0
-                F2(k) = w_2(k)*m_2(k-1);
+            if w_2(:,kt,k) > 0
+                F2(k) = w_2(:,kt,k)*sigma2(:,kt,k-1);
             else
-                F2(k) = w_2(k)*m_2(k);
+                F2(k) = w_2(:,kt,k)*sigma2(:,kt,k);
             end
         end
         F(nzp) = 0;
         
         % Mass tendencies from LES
         dz = z(2:nzp) - z(1:nz);
-        LES_m1_transport = - (F1(2:nzp) - F1(1:nz))./dz;
-        LES_m2_transport = - (F2(2:nzp) - F2(1:nz))./dz;
+        LES_m1_transport = - (F1(2:nzp-1) - F1(1:nz-1))./dz;
+        LES_m2_transport = - (F2(2:nzp-1) - F2(1:nz-1))./dz;
     
         fig = figure(1);
         clf('reset')
