@@ -18,7 +18,7 @@ if settings.save_figures | settings.save_images
 
     % Combine individual profiles for multi-panel plots
     % Requires .fig files to be imported
-    if settings.save_figures
+    if settings.save_figures & settings.plot_combinations
         plot_profile_combinations
     end
 end
