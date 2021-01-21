@@ -625,21 +625,26 @@ for kt = 1:length(time_s)
         nz = length(z)-1;
         nzp = length(z);
         
+        LES_w1 = w_1(:,kt);
+        LES_w2 = w_2(:,kt);
+        LES_sigma1 = sigma1(:,kt);
+        LES_sigma2 = sigma2(:,kt);
         F1(1) = 0;
         F2(1) = 0;
         for k = 2:nz
-            if w_1(:,kt,k) > 0
-                F1(k) = w_1(:,kt,k)*sigma1(:,kt,k-1);
+            if LES_w1(k) > 0
+                F1(k) = LES_w1(k)*LES_sigma1(k-1);
             else
-                F1(k) = w_1(:,kt,k)*sigma1(:,kt,k);
+                F1(k) = LES_w1(k)*LES_sigma1(k);
             end
-            if w_2(:,kt,k) > 0
-                F2(k) = w_2(:,kt,k)*sigma2(:,kt,k-1);
+            if LES_w2(k) > 0
+                F2(k) = LES_w2(k)*LES_sigma2(k-1);
             else
-                F2(k) = w_2(:,kt,k)*sigma2(:,kt,k);
+                F2(k) = LES_w2(k)*LES_sigma2(k);
             end
         end
-        F(nzp) = 0;
+        F1(nzp) = 0;
+        F2(nzp) = 0;
         
         % Mass tendencies from LES
         dz = z(2:nzp) - z(1:nz);
@@ -651,8 +656,8 @@ for kt = 1:length(time_s)
         subplot(1,1,1)
         indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
         hold on
-        plot(LES_m1_transport(:,kt),0.5*(z(1:nz)+z(2:nzp)),'b',SCM_m1_transport(:,kt),SCM_zp,'b--',...
-             LES_m2_transport(:,kt),0.5*(z(1:nz)+z(2:nzp)),'r',SCM_m2_transport(:,kt),SCM_zp,'r--')
+        plot(LES_m1_transport,0.5*(z(1:nz)+z(2:nzp)),'b',SCM_m1_transport(:,kt),SCM_zp,'b--',...
+             LES_m2_transport,0.5*(z(1:nz)+z(2:nzp)),'r',SCM_m2_transport(:,kt),SCM_zp,'r--')
         hold off
         xlim([-2e-3,2e-3])
         ylim([0,settings.zplottop])
