@@ -337,12 +337,30 @@ for kt = 1:length(time_s)
         hold off
         xlim([-8e1,8e1])
         ylim([0,settings.zplottop])
-        xlabel('qth flux res','fontsize',settings.fs)
+        xlabel('\theta_v flux res','fontsize',settings.fs)
         ylabel(' z(m) ','fontsize',settings.fs)
         title([num2str(t_hours),' hours'],'fontsize',settings.fs)
         set(gca,'fontsize',settings.fs)
         set(gcf,'position',[10,10,500,500]);
         filename = join(["resolvedThetaFluxes_",num2str(kt)], "");
+        save_figure(settings, fig, filename);
+        
+        fig = figure(1);
+        clf('reset')
+        subplot(1,1,1)
+        indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
+        hold on
+        plot(wthv_res1(:,kt),z,'b',SCM_wth_res1(:,kt),SCM_zw,'b--',...
+             wthv_res2(:,kt),z,'r',SCM_wth_res2(:,kt),SCM_zw,'r--')
+        hold off
+        xlim([-8e1,8e1])
+        ylim([0,settings.zplottop])
+        xlabel('\theta_v flux res','fontsize',settings.fs)
+        ylabel(' z(m) ','fontsize',settings.fs)
+        title([num2str(t_hours),' hours'],'fontsize',settings.fs)
+        set(gca,'fontsize',settings.fs)
+        set(gcf,'position',[10,10,500,500]);
+        filename = join(["resolvedThetavFluxes_",num2str(kt)], "");
         save_figure(settings, fig, filename);
     end
     
@@ -629,6 +647,9 @@ for kt = 1:length(time_s)
         LES_w2 = w_2(:,kt);
         LES_sigma1 = sigma1(:,kt);
         LES_sigma2 = sigma2(:,kt);
+        length(z)
+        length(LES_w1)
+        length(LES_sigma1)
         F1(1) = 0;
         F2(1) = 0;
         for k = 2:nz
@@ -648,16 +669,18 @@ for kt = 1:length(time_s)
         
         % Mass tendencies from LES
         dz = z(2:nzp) - z(1:nz);
-        LES_m1_transport = - (F1(2:nzp-1) - F1(1:nz-1))./dz;
-        LES_m2_transport = - (F2(2:nzp-1) - F2(1:nz-1))./dz;
+        LES_m1_transport = - (F1(2:nzp) - F1(1:nz))./dz;
+        LES_m2_transport = - (F2(2:nzp) - F2(1:nz))./dz;
+        F1
     
         fig = figure(1);
         clf('reset')
         subplot(1,1,1)
         indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
         hold on
-        plot(LES_m1_transport,0.5*(z(1:nz)+z(2:nzp)),'b',SCM_m1_transport(:,kt),SCM_zp,'b--',...
-             LES_m2_transport,0.5*(z(1:nz)+z(2:nzp)),'r',SCM_m2_transport(:,kt),SCM_zp,'r--')
+        %0.5*(z(1:nz)+z(2:nzp))
+        plot(LES_m1_transport,z(1:nz),'b',SCM_m1_transport(:,kt),SCM_zp,'b--',...
+             LES_m2_transport,z(1:nz),'r',SCM_m2_transport(:,kt),SCM_zp,'r--')
         hold off
         xlim([-2e-3,2e-3])
         ylim([0,settings.zplottop])
