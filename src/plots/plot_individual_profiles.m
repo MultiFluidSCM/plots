@@ -668,10 +668,9 @@ for kt = 1:length(time_s)
         F2(nzp) = 0;
         
         % Mass tendencies from LES
-        dz = z(2:nzp) - z(1:nz);
+        % dz = z(2:nzp) - z(1:nz);
         LES_m1_transport = - (F1(2:nzp) - F1(1:nz))./dz;
         LES_m2_transport = - (F2(2:nzp) - F2(1:nz))./dz;
-        F1
     
         fig = figure(1);
         clf('reset')
@@ -679,6 +678,9 @@ for kt = 1:length(time_s)
         indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
         hold on
         %0.5*(z(1:nz)+z(2:nzp))
+        disp(' ');
+        disp(num2str(length(LES_m1_transport)));
+        disp(num2str(length(z(1:nz))));
         plot(LES_m1_transport,z(1:nz),'b',SCM_m1_transport(:,kt),SCM_zp,'b--',...
              LES_m2_transport,z(1:nz),'r',SCM_m2_transport(:,kt),SCM_zp,'r--')
         hold off
