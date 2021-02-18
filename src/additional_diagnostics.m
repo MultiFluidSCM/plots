@@ -40,6 +40,31 @@ liquid_flux_res = (w_2 - w_1).*sigma2.*(ql_2 - ql_mean);
 SCM_ql_mean = SCM_sigma1w.*SCM_ql_1 + SCM_sigma2w.*SCM_ql_2;
 SCM_liquid_flux_res = (SCM_w_2 - SCM_w_1).*SCM_sigma2w.*(SCM_ql_2 - SCM_ql_mean);
 
+% Calculate mixing ratios from specific humidities
+rv_1 = qv_1./(1-qv_1);
+rv_2 = qv_2./(1-qv_2);
+rv_mean = qv_mean./(1-qv_mean);
+rl_1 = ql_1./(1-ql_1);
+rl_2 = ql_2./(1-ql_2);
+rl_mean = ql_mean./(1-ql_mean);
+SCM_rv_1 = SCM_qv_1./(1-SCM_qv_1);
+SCM_rv_2 = SCM_qv_2./(1-SCM_qv_2);
+SCM_rv_mean = SCM_qv_mean./(1-SCM_qv_mean);
+SCM_rl_1 = SCM_ql_1./(1-SCM_ql_1);
+SCM_rl_2 = SCM_ql_2./(1-SCM_ql_2);
+SCM_rl_mean = SCM_ql_mean./(1-SCM_ql_mean);
+
+% Virtual potential temperature and buoyancy
+thv_1 = th_1.*(1 + 0.61*rv_1 - rl_1);
+thv_2 = th_2.*(1 + 0.61*rv_2 - rl_2);
+thv_mean = th_mean.*(1 + 0.61*rv_mean - rl_mean);
+SCM_thv_1 = SCM_th_1.*(1 + 0.61*SCM_rv_1 - SCM_rl_1);
+SCM_thv_2 = SCM_th_2.*(1 + 0.61*SCM_rv_2 - SCM_rl_2);
+SCM_thv_mean = SCM_th_mean.*(1 + 0.61*SCM_rv_mean - SCM_rl_mean);
+
+buoyv = settings.gravity*(thv_2 - thv_mean)./thv_mean;
+SCM_est_buoyv = settings.gravity*(SCM_thv_2 - SCM_thv_mean)./SCM_thv_mean;
+
 % Tidy cases with cloud base at lid
 nocloud = clbas > 4000;
 clbas = clbas.*(1 - nocloud);

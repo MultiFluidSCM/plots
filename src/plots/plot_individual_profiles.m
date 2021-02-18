@@ -66,12 +66,31 @@ for kt = 1:length(time_s)
     hold off
     xlim([300,320])
     ylim([0,settings.zplottop])
-    xlabel('Theta 1 and 2 (K)','fontsize',settings.fs)
+    xlabel('\theta (K)','fontsize',settings.fs)
     ylabel(' z(m) ','fontsize',settings.fs)
     title([num2str(t_hours),' hours'],'fontsize',settings.fs)
     set(gca,'fontsize',settings.fs)
     set(gcf,'position',[10,10,500,500]);
     filename = join(["potentialTemperature_",num2str(kt)], "");
+    save_figure(settings, fig, filename);
+    
+    % Virtual potential temperature (K)
+    fig = figure(1);
+    clf('reset')
+    subplot(1,1,1)
+    indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
+    hold on
+    plot(thv_1(:,kt),z,'b',SCM_thv_1(:,kt),SCM_zw,'b--',...
+         thv_2(:,kt),z,'r',SCM_thv_2(:,kt),SCM_zw,'r--')
+    hold off
+    xlim([300,320])
+    ylim([0,settings.zplottop])
+    xlabel('\theta_v (K)','fontsize',settings.fs)
+    ylabel(' z(m) ','fontsize',settings.fs)
+    title([num2str(t_hours),' hours'],'fontsize',settings.fs)
+    set(gca,'fontsize',settings.fs)
+    set(gcf,'position',[10,10,500,500]);
+    filename = join(["potentialTemperatureVirtual_",num2str(kt)], "");
     save_figure(settings, fig, filename);
 
     % Updraft buoyancy(m/s^2)
@@ -80,9 +99,12 @@ for kt = 1:length(time_s)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(buoy(:,kt),z,'k',SCM_buoy(:,kt),SCM_zw,'k--',SCM_est_buoy(:,kt),SCM_zw,'k:')
+    plot(buoy(:,kt),z,'color',[0.8 0.8 0.8])
+    plot(SCM_est_buoy(:,kt),SCM_zw,'--','color',[0.8 0.8 0.8])
+    plot(SCM_buoy(:,kt),SCM_zw,'k--',...
+         buoyv(:,kt),z,'m', SCM_est_buoyv(:,kt),SCM_zw,'m--')
     hold off
-    xlim([-0.2,0.05])
+    xlim([-0.1,0.05])
     ylim([0,settings.zplottop])
     xlabel('Buoyancy (m/s^2)','fontsize',settings.fs)
     ylabel(' z(m) ','fontsize',settings.fs)
