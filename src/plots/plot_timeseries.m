@@ -35,6 +35,7 @@ set(gca,'fontsize',settings.fs,'XTick',[1:14])
 
 % saveas(fig, fullfile(settings.folders.images, "timeseries_cloud_height.png"));
 save_figure(settings, fig, "timeseries_cloud_height");
+saveas(fig, fullfile(settings.folders.root,  join(["cloud_height_",settings.folders.id,".png"], "")));
 
 if exist('SCM_cbase_sigma2')
     fig = figure(1);

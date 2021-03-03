@@ -99,8 +99,8 @@ for kt = 1:length(time_s)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(buoy(:,kt),z,'color',[0.8 0.8 0.8])
-    plot(SCM_est_buoy(:,kt),SCM_zw,'--','color',[0.8 0.8 0.8])
+    % plot(buoy(:,kt),z,'color',[0.8 0.8 0.8])
+    % plot(SCM_est_buoy(:,kt),SCM_zw,'--','color',[0.8 0.8 0.8])
     plot(SCM_buoy(:,kt),SCM_zw,'k--',...
          buoyv(:,kt),z,'m', SCM_est_buoyv(:,kt),SCM_zw,'m--')
     hold off

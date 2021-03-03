@@ -1,4 +1,4 @@
-function compare_scm_to_les(settings)
+function rmse_cloud = compare_scm_to_les(settings)
 % Compare SCM results with LES
 
 % Data are from LES of ARM case (Brown et al.)
@@ -14,12 +14,12 @@ additional_diagnostics
 
 if settings.save_figures | settings.save_images
     % Plot each profile for each saved time
-    plot_individual_profiles
+    % plot_individual_profiles
 
     % Combine individual profiles for multi-panel plots
     % Requires .fig files to be imported
     if settings.save_figures & settings.plot_combinations
-        plot_profile_combinations
+        % plot_profile_combinations
     end
 end
 
@@ -30,5 +30,9 @@ end
 
 % Plot variable changes over time
 plot_timeseries
+
+rmse_cbase = rmse(clbas, interpolate_timeseries(time_ser_hours, SCM_time_ser_hours, SCM_zcbase));
+rmse_ctop  = rmse(cltop, interpolate_timeseries(time_ser_hours, SCM_time_ser_hours, SCM_zctop));
+rmse_cloud = (rmse_cbase + rmse_ctop)/1e3;
 
 end
