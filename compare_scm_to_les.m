@@ -12,14 +12,18 @@ load_scm_data
 % Book-keeping and extra variables
 additional_diagnostics
 
-if settings.save_figures | settings.save_images
-    % Plot each profile for each saved time
-    % plot_individual_profiles
+% Plot variable changes over time
+plot_timeseries
+
+% Plot each profile for each saved time
+if settings.plot_individual_profiles & (settings.save_figures | settings.save_images)
+    
+    plot_individual_profiles
 
     % Combine individual profiles for multi-panel plots
     % Requires .fig files to be imported
     if settings.save_figures & settings.plot_combinations
-        % plot_profile_combinations
+        plot_profile_combinations
     end
 end
 
@@ -28,8 +32,6 @@ if settings.plot_original_figures
     plot_higher_moments
 end
 
-% Plot variable changes over time
-plot_timeseries
 
 rmse_cbase = rmse(clbas, interpolate_timeseries(time_ser_hours, SCM_time_ser_hours, SCM_zcbase));
 rmse_ctop  = rmse(cltop, interpolate_timeseries(time_ser_hours, SCM_time_ser_hours, SCM_zctop));
