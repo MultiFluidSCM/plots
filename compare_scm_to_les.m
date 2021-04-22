@@ -32,9 +32,32 @@ if settings.plot_original_figures
     plot_higher_moments
 end
 
+% Data to be used for calculating the RMS error relative to LES data
+SCM_s2_corr = SCM_sigma2(:,3);
+SCM_w2_corr = SCM_w_2(:,3);
+SCM_q2_corr = SCM_ql_2(:,3);
+SCM_cb_corr = SCM_zcbase(:);
+SCM_ct_corr = SCM_zctop(:);
+SCM_cc_corr = SCM_cldcov(:);
 
-rmse_cbase = rmse(clbas, interpolate_timeseries(time_ser_hours, SCM_time_ser_hours, SCM_zcbase));
-rmse_ctop  = rmse(cltop, interpolate_timeseries(time_ser_hours, SCM_time_ser_hours, SCM_zctop));
-rmse_cloud = (rmse_cbase + rmse_ctop)/1e3;
+% Remove NaN values
+SCM_s2_corr(isnan(SCM_s2_corr)) = 0;
+SCM_w2_corr(isnan(SCM_w2_corr)) = 0;
+SCM_q2_corr(isnan(SCM_q2_corr)) = 0;
+SCM_cb_corr(isnan(SCM_cb_corr)) = 0;
+SCM_ct_corr(isnan(SCM_ct_corr)) = 0;
+SCM_cc_corr(isnan(SCM_cc_corr)) = 0;
 
+% Calculate RMSE and combine
+rmse_cbase = rmse(clbas, interpolate_timeseries(time_ser_hours, SCM_time_ser_hours, SCM_cb_corr))/max(clbas);
+rmse_ctop  = rmse(cltop, interpolate_timeseries(time_ser_hours, SCM_time_ser_hours, SCM_ct_corr)) /max(cltop);
+rmse_ccov  = rmse(totc,  interpolate_timeseries(time_ser_hours, SCM_time_ser_hours, SCM_cc_corr))/max(totc);
+rmse_sigma = rmse(sigma2(1:140,3), interpolate_timeseries(z(1:140), SCM_zp, SCM_s2_corr))/max(sigma2(1:140,3));
+rmse_w2    = rmse(   w_2(1:140,3), interpolate_timeseries(z(1:140), SCM_zw, SCM_w2_corr))/max(   w_2(1:140,3));
+rmse_ql2   = rmse(  ql_2(1:140,3), interpolate_timeseries(z(1:140), SCM_zw, SCM_q2_corr))/max(  ql_2(1:140,3));
+
+rmse_cloud = (rmse_cbase + rmse_ctop + rmse_ccov + rmse_sigma + rmse_w2 + rmse_ql2)/6;
+% rmse_cloud = (rmse_cbase + rmse_ctop + rmse_ccov)/3;
+% rmse_cloud = (rmse_cbase + rmse_ctop)/2;
+rmse_cloud
 end

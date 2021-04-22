@@ -6,5 +6,7 @@ for i=1:length(t_new)
     x_new(i) = interpolate(t, x, t_new(i));
 end
 
+x_new = transpose(x_new);
+
 end
 
