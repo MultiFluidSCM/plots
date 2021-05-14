@@ -57,9 +57,10 @@ rmse_w2    = rmse(   w_2(1:140,3), interpolate_timeseries(z(1:140), SCM_zw, SCM_
 rmse_ql2   = rmse(  ql_2(1:140,3), interpolate_timeseries(z(1:140), SCM_zw, SCM_q2_corr))/max(  ql_2(1:140,3));
 
 % rmse_cloud = (rmse_cbase + rmse_ctop + rmse_ccov + rmse_sigma + rmse_w2 + rmse_ql2)/6;
-rmse_cloud = (rmse_cbase + rmse_ctop + rmse_sigma)/3;
+% rmse_cloud = (rmse_cbase + rmse_ctop + 3*rmse_sigma)/5;
+% rmse_cloud = (rmse_cbase + rmse_ctop + rmse_sigma)/3;
 % rmse_cloud = (rmse_cbase + rmse_ctop + rmse_ccov + rmse_sigma)/4;
 % rmse_cloud = (rmse_cbase + rmse_ctop + rmse_ccov)/3;
-% rmse_cloud = (rmse_cbase + rmse_ctop)/2;
+rmse_cloud = (rmse_cbase + rmse_ctop)/2;
 
 end
