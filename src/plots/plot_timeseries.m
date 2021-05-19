@@ -16,7 +16,7 @@ title('Tot cld cov','fontsize',settings.fs)
 set(gca,'fontsize',settings.fs,'XTick',[1:14])
 %pause
 
-% saveas(fig, fullfile(settings.folders.images, "timeseries_cloud_cover.png"));
+saveas(fig, fullfile(settings.folders.root,  join(["cloud_cover_",settings.folders.id,".png"], "")));
 save_figure(settings, fig, "timeseries_cloud_cover");
 
 fig = figure(4);
@@ -33,9 +33,9 @@ title('Cloud base/top','fontsize',settings.fs)
 set(gca,'fontsize',settings.fs,'XTick',[1:14])
 %pause
 
-% saveas(fig, fullfile(settings.folders.images, "timeseries_cloud_height.png"));
-save_figure(settings, fig, "timeseries_cloud_height");
 saveas(fig, fullfile(settings.folders.root,  join(["cloud_height_",settings.folders.id,".png"], "")));
+save_figure(settings, fig, "timeseries_cloud_height");
+
 
 if exist('SCM_cbase_sigma2')
     fig = figure(1);
