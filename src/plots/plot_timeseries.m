@@ -36,6 +36,30 @@ set(gca,'fontsize',settings.fs,'XTick',[1:14])
 saveas(fig, fullfile(settings.folders.root,  join(["cloud_height_",settings.folders.id,".png"], "")));
 save_figure(settings, fig, "timeseries_cloud_height");
 
+if exist('SCM_cloud_fraction')
+    fig = figure(4);
+    set(gcf,'Position',[440 432 765 366])
+    subplot(1,1,1)
+    
+    [X,Y] = meshgrid(SCM_time_ser_hours, SCM_zw);
+    levels = [0.001,0.005,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1];
+    
+    contourf(X, Y, SCM_cloud_fraction, levels, 'w')
+    colorbar
+    
+    hold on
+    plot(time_ser_hours,cltop,'k', time_ser_hours,clbas,'k')
+    hold off
+    
+    xlabel('Time','fontsize',settings.fs)
+    ylabel('z (m)','fontsize',settings.fs)
+    title('Cloud fraction','fontsize',settings.fs)
+    set(gca,'fontsize',settings.fs,'XTick',[1:14])
+    
+    saveas(fig, fullfile(settings.folders.root,  join(["cloud_fraction_",settings.folders.id,".png"], "")));
+    save_figure(settings, fig, "timeseries_cloud_fraction");
+end
+
 
 if exist('SCM_cbase_sigma2')
     fig = figure(1);
