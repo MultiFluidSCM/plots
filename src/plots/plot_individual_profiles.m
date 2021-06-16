@@ -608,8 +608,8 @@ for kt = 1:length(time_s)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(thth_sg1(:,kt),z,'b',SCM_thth_sg1(:,kt),SCM_zw,'b--',...
-         thth_sg2(:,kt),z,'r',SCM_thth_sg2(:,kt),SCM_zw,'r--')
+    plot(thth_sg1(:,kt),z,'b',SCM_thth_sg1(:,kt),SCM_zp,'b--',...
+         thth_sg2(:,kt),z,'r',SCM_thth_sg2(:,kt),SCM_zp,'r--')
     hold off
     xlim([0,3])
     ylim([0,settings.zplottop])
@@ -647,8 +647,8 @@ for kt = 1:length(time_s)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(1e6*qvqv_sg1(:,kt),z,'b',1e6*SCM_qq_sg1(:,kt),SCM_zw,'b--',...
-         1e6*qvqv_sg2(:,kt),z,'r',1e6*SCM_qq_sg2(:,kt),SCM_zw,'r--')
+    plot(1e6*qvqv_sg1(:,kt),z,'b',1e6*SCM_qq_sg1(:,kt),SCM_zp,'b--',...
+         1e6*qvqv_sg2(:,kt),z,'r',1e6*SCM_qq_sg2(:,kt),SCM_zp,'r--')
     hold off
     xlim([0,20])
     ylim([0,settings.zplottop])
