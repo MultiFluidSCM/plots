@@ -608,8 +608,8 @@ for kt = 1:length(time_s)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(thth_sg1(:,kt),z,'b',SCM_thth_sg1(:,kt),SCM_zp,'b--',...
-         thth_sg2(:,kt),z,'r',SCM_thth_sg2(:,kt),SCM_zp,'r--')
+    plot(thth_sg1(:,kt),z,'b',SCM_thth_sg1(:,kt),SCM_zw,'b--',...
+         thth_sg2(:,kt),z,'r',SCM_thth_sg2(:,kt),SCM_zw,'r--')
     hold off
     xlim([0,3])
     ylim([0,settings.zplottop])
