@@ -10,7 +10,7 @@ SCM_time_ser_hours = SCM_time_ser/3600;
 
 % Total cloud cover
 plot(time_ser_hours,totc,'r',SCM_time_ser_hours,SCM_cldcov,'r--')
-xlabel('Time','fontsize',settings.fs)
+xlabel('t (hours)','fontsize',settings.fs)
 ylabel('Tot cld cov','fontsize',settings.fs)
 title('Tot cld cov','fontsize',settings.fs)
 set(gca,'fontsize',settings.fs,'XTick',[1:14])
@@ -27,7 +27,7 @@ subplot(1,1,1)
 plot(time_ser_hours,cltop,'r',SCM_time_ser_hours,SCM_zctop ,'r--',...
      time_ser_hours,clbas,'k',SCM_time_ser_hours,SCM_zcbase,'k--',...
                               SCM_time_ser_hours,SCM_zstar,'b--')
-xlabel('Time','fontsize',settings.fs)
+xlabel('t (hours)','fontsize',settings.fs)
 ylabel('Cld base/top','fontsize',settings.fs)
 title('Cloud base/top','fontsize',settings.fs)
 set(gca,'fontsize',settings.fs,'XTick',[1:14])
@@ -38,70 +38,147 @@ save_figure(settings, fig, "timeseries_cloud_height");
 
 if exist('SCM_cloud_fraction')
     % Grid for contour plot
-    [X,Y] = meshgrid(SCM_time_ser_hours, SCM_zw);
+    [x_scm, y_scm] = meshgrid(SCM_time_ser_hours, SCM_zw);
+    [x_les, y_les] = meshgrid(double(t_cloud_fraction)/3600, z_cloud_fraction);
     
+    % Contour levels
+    levels = [0.001,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1];
     
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Contour for fluid 1
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     fig = figure(4);
-    set(gcf,'Position',[440 432 765 366])
-    subplot(1,1,1)
+    set(gcf,'Position',[440 50 765 732])
     
-    levels = [0.001,0.005,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1];
-    contourf(X, Y, SCM_cloud_fraction1, levels, 'w')
-    colorbar
-    caxis([levels(1), levels(end)]);
+    subplot(2,1,1)
+    contourf(x_les, y_les, cloud_fraction1_sigma1, levels, 'w')
     
     hold on
     plot(time_ser_hours,cltop,'k', time_ser_hours,clbas,'k')
     hold off
     
-    xlabel('Time','fontsize',settings.fs)
+    xlim([min(time_ser_hours), max(time_ser_hours)])
+    ylim([0,settings.zplottop])
     ylabel('z (m)','fontsize',settings.fs)
-    title('Fluid 1 cloud fraction','fontsize',settings.fs)
+    title('LES','fontsize',settings.fs)
     set(gca,'fontsize',settings.fs,'XTick',[1:14])
+    
+    cb = colorbar;
+    cb.Label.String = 'Cloud fraction from fluid 1';
+    caxis([levels(1), levels(end)]);
+    
+    
+    subplot(2,1,2)
+    
+    contourf(x_scm, y_scm, SCM_cloud_fraction1_sigma1, levels, 'w')
+    
+    hold on
+    plot(time_ser_hours,cltop,'k', time_ser_hours,clbas,'k')
+    hold off
+    
+    xlim([min(time_ser_hours), max(time_ser_hours)])
+    ylim([0,settings.zplottop])
+    xlabel('t (hours)','fontsize',settings.fs)
+    ylabel('z (m)','fontsize',settings.fs)
+    title('SCM','fontsize',settings.fs)
+    set(gca,'fontsize',settings.fs,'XTick',[1:14])
+    
+    cb = colorbar;
+    cb.Label.String = 'Cloud fraction from fluid 1';
+    caxis([levels(1), levels(end)]);
     
     saveas(fig, fullfile(settings.folders.root,  join(["cloud_fraction1_",settings.folders.id,".png"], "")));
     save_figure(settings, fig, "timeseries_cloud_fraction1");
     
-    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Contour for fluid 2
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     fig = figure(4);
-    set(gcf,'Position',[440 432 765 366])
-    subplot(1,1,1)
+    set(gcf,'Position',[440 50 765 732])
     
-    levels = [0.001,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0];
-    contourf(X, Y, SCM_cloud_fraction2, levels, 'w')
-    colorbar
-    caxis([levels(1), levels(end)]);
+    subplot(2,1,1)
+    contourf(x_les, y_les, cloud_fraction2_sigma2, levels, 'w')
     
     hold on
     plot(time_ser_hours,cltop,'k', time_ser_hours,clbas,'k')
     hold off
     
-    xlabel('Time','fontsize',settings.fs)
+    xlim([min(time_ser_hours), max(time_ser_hours)])
+    ylim([0,settings.zplottop])
     ylabel('z (m)','fontsize',settings.fs)
-    title('Fluid 2 cloud fraction','fontsize',settings.fs)
+    title('LES','fontsize',settings.fs)
     set(gca,'fontsize',settings.fs,'XTick',[1:14])
+    
+    cb = colorbar;
+    cb.Label.String = 'Cloud fraction from fluid 2';
+    caxis([levels(1), levels(end)]);
+    
+    
+    subplot(2,1,2)
+    
+    contourf(x_scm, y_scm, SCM_cloud_fraction2_sigma2, levels, 'w')
+    
+    hold on
+    plot(time_ser_hours,cltop,'k', time_ser_hours,clbas,'k')
+    hold off
+    
+    xlim([min(time_ser_hours), max(time_ser_hours)])
+    ylim([0,settings.zplottop])
+    xlabel('t (hours)','fontsize',settings.fs)
+    ylabel('z (m)','fontsize',settings.fs)
+    title('SCM','fontsize',settings.fs)
+    set(gca,'fontsize',settings.fs,'XTick',[1:14])
+    
+    cb = colorbar;
+    cb.Label.String = 'Cloud fraction from fluid 2';
+    caxis([levels(1), levels(end)]);
     
     saveas(fig, fullfile(settings.folders.root,  join(["cloud_fraction2_",settings.folders.id,".png"], "")));
     save_figure(settings, fig, "timeseries_cloud_fraction2");
     
-    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Contour for total fluid
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     fig = figure(4);
-    set(gcf,'Position',[440 432 765 366])
-    subplot(1,1,1)
+    set(gcf,'Position',[440 50 765 732])
     
-    levels = [0.001,0.005,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1];
-    contourf(X, Y, SCM_cloud_fraction, levels, 'w')
-    colorbar
-    caxis([levels(1), levels(end)]);
+    subplot(2,1,1)
+    contourf(x_les, y_les, cloud_fraction, levels, 'w')
     
     hold on
     plot(time_ser_hours,cltop,'k', time_ser_hours,clbas,'k')
     hold off
     
-    xlabel('Time','fontsize',settings.fs)
+    xlim([min(time_ser_hours), max(time_ser_hours)])
+    ylim([0,settings.zplottop])
     ylabel('z (m)','fontsize',settings.fs)
-    title('Cloud fraction','fontsize',settings.fs)
+    title('LES','fontsize',settings.fs)
     set(gca,'fontsize',settings.fs,'XTick',[1:14])
+    
+    cb = colorbar;
+    cb.Label.String = 'Cloud fraction';
+    caxis([levels(1), levels(end)]);
+    
+    
+    subplot(2,1,2)
+    
+    contourf(x_scm, y_scm, SCM_cloud_fraction, levels, 'w')
+    
+    hold on
+    plot(time_ser_hours,cltop,'k', time_ser_hours,clbas,'k')
+    contour(x_les, y_les, cloud_fraction, [0.001,0.001], 'k')
+    hold off
+    
+    xlim([min(time_ser_hours), max(time_ser_hours)])
+    ylim([0,settings.zplottop])
+    xlabel('t (hours)','fontsize',settings.fs)
+    ylabel('z (m)','fontsize',settings.fs)
+    title('SCM','fontsize',settings.fs)
+    set(gca,'fontsize',settings.fs,'XTick',[1:14])
+    
+    cb = colorbar;
+    cb.Label.String = 'Cloud fraction';
+    caxis([levels(1), levels(end)]);
     
     saveas(fig, fullfile(settings.folders.root,  join(["cloud_fraction_",settings.folders.id,".png"], "")));
     save_figure(settings, fig, "timeseries_cloud_fraction");
