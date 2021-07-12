@@ -1,20 +1,22 @@
 
+% Time in hours for time series
+time_ser_hours = time_ser/3600;
+SCM_time_ser_hours = SCM_time_ser/3600;
+t_cloud_fraction_hours = double(t_cloud_fraction)/3600;
+
 % Time series
 fig = figure(3);
 set(gcf,'Position',[440 432 765 366])
 subplot(1,1,1)
 
-% Time in hours for time series
-time_ser_hours = time_ser/3600;
-SCM_time_ser_hours = SCM_time_ser/3600;
-
 % Total cloud cover
-plot(time_ser_hours,totc,'r',SCM_time_ser_hours,SCM_cldcov,'r--')
+plot(time_ser_hours,totc,'k',SCM_time_ser_hours,SCM_cldcov,'k--',...
+     t_cloud_fraction_hours,cloud_cover,'m',...
+     t_cloud_fraction_hours,cloud_cover2,'r')
 xlabel('t (hours)','fontsize',settings.fs)
 ylabel('Tot cld cov','fontsize',settings.fs)
 title('Tot cld cov','fontsize',settings.fs)
 set(gca,'fontsize',settings.fs,'XTick',[1:14])
-%pause
 
 saveas(fig, fullfile(settings.folders.root,  join(["cloud_cover_",settings.folders.id,".png"], "")));
 save_figure(settings, fig, "timeseries_cloud_cover");
@@ -31,7 +33,6 @@ xlabel('t (hours)','fontsize',settings.fs)
 ylabel('Cld base/top','fontsize',settings.fs)
 title('Cloud base/top','fontsize',settings.fs)
 set(gca,'fontsize',settings.fs,'XTick',[1:14])
-%pause
 
 saveas(fig, fullfile(settings.folders.root,  join(["cloud_height_",settings.folders.id,".png"], "")));
 save_figure(settings, fig, "timeseries_cloud_height");
@@ -39,7 +40,7 @@ save_figure(settings, fig, "timeseries_cloud_height");
 if exist('SCM_cloud_fraction')
     % Grid for contour plot
     [x_scm, y_scm] = meshgrid(SCM_time_ser_hours, SCM_zw);
-    [x_les, y_les] = meshgrid(double(t_cloud_fraction)/3600, z_cloud_fraction);
+    [x_les, y_les] = meshgrid(t_cloud_fraction_hours, z_cloud_fraction);
     
     % Contour levels
     levels = [0.001,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1];
@@ -50,7 +51,7 @@ if exist('SCM_cloud_fraction')
     fig = figure(4);
     set(gcf,'Position',[440 50 765 732])
     
-    subplot(2,1,1)
+    ax1 = subplot(2,1,1);
     contourf(x_les, y_les, cloud_fraction1_sigma1, levels, 'w')
     
     hold on
@@ -63,12 +64,12 @@ if exist('SCM_cloud_fraction')
     title('LES','fontsize',settings.fs)
     set(gca,'fontsize',settings.fs,'XTick',[1:14])
     
-    cb = colorbar;
+    cb = colorbar(ax1);
     cb.Label.String = 'Cloud fraction from fluid 1';
     caxis([levels(1), levels(end)]);
     
     
-    subplot(2,1,2)
+    ax2 = subplot(2,1,2);
     
     contourf(x_scm, y_scm, SCM_cloud_fraction1_sigma1, levels, 'w')
     
@@ -83,7 +84,7 @@ if exist('SCM_cloud_fraction')
     title('SCM','fontsize',settings.fs)
     set(gca,'fontsize',settings.fs,'XTick',[1:14])
     
-    cb = colorbar;
+    cb = colorbar(ax2);
     cb.Label.String = 'Cloud fraction from fluid 1';
     caxis([levels(1), levels(end)]);
     
@@ -96,7 +97,7 @@ if exist('SCM_cloud_fraction')
     fig = figure(4);
     set(gcf,'Position',[440 50 765 732])
     
-    subplot(2,1,1)
+    ax1 = subplot(2,1,1);
     contourf(x_les, y_les, cloud_fraction2_sigma2, levels, 'w')
     
     hold on
@@ -109,12 +110,12 @@ if exist('SCM_cloud_fraction')
     title('LES','fontsize',settings.fs)
     set(gca,'fontsize',settings.fs,'XTick',[1:14])
     
-    cb = colorbar;
+    cb = colorbar(ax1);
     cb.Label.String = 'Cloud fraction from fluid 2';
     caxis([levels(1), levels(end)]);
     
     
-    subplot(2,1,2)
+    ax2 = subplot(2,1,2);
     
     contourf(x_scm, y_scm, SCM_cloud_fraction2_sigma2, levels, 'w')
     
@@ -129,7 +130,7 @@ if exist('SCM_cloud_fraction')
     title('SCM','fontsize',settings.fs)
     set(gca,'fontsize',settings.fs,'XTick',[1:14])
     
-    cb = colorbar;
+    cb = colorbar(ax2);
     cb.Label.String = 'Cloud fraction from fluid 2';
     caxis([levels(1), levels(end)]);
     
@@ -142,7 +143,7 @@ if exist('SCM_cloud_fraction')
     fig = figure(4);
     set(gcf,'Position',[440 50 765 732])
     
-    subplot(2,1,1)
+    ax1 = subplot(2,1,1);
     contourf(x_les, y_les, cloud_fraction, levels, 'w')
     
     hold on
@@ -155,12 +156,12 @@ if exist('SCM_cloud_fraction')
     title('LES','fontsize',settings.fs)
     set(gca,'fontsize',settings.fs,'XTick',[1:14])
     
-    cb = colorbar;
+    cb = colorbar(ax1);
     cb.Label.String = 'Cloud fraction';
     caxis([levels(1), levels(end)]);
     
     
-    subplot(2,1,2)
+    ax2 = subplot(2,1,2);
     
     contourf(x_scm, y_scm, SCM_cloud_fraction, levels, 'w')
     
@@ -176,7 +177,7 @@ if exist('SCM_cloud_fraction')
     title('SCM','fontsize',settings.fs)
     set(gca,'fontsize',settings.fs,'XTick',[1:14])
     
-    cb = colorbar;
+    cb = colorbar(ax2);
     cb.Label.String = 'Cloud fraction';
     caxis([levels(1), levels(end)]);
     
