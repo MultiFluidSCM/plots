@@ -4,6 +4,7 @@ function rmse_cloud = compare_scm_to_les(settings)
 % Data are from LES of ARM case (Brown et al.)
 % Dx=50m, Dz=20m, from a 19.2x19.2 km^2 domain using LEM.
 % The simulation starts at 05:30 local time (11:30 UTC).
+plot_compatibility
 
 load_les_data
 load_scm_data

@@ -1,6 +1,5 @@
 
 % Time in hours for time series
-time_ser_hours = time_ser/3600;
 SCM_time_ser_hours = SCM_time_ser/3600;
 t_cloud_fraction_hours = double(t_cloud_fraction)/3600;
 
@@ -10,7 +9,7 @@ set(gcf,'Position',[440 432 765 366])
 subplot(1,1,1)
 
 % Total cloud cover
-plot(time_ser_hours,totc,'k',SCM_time_ser_hours,SCM_cldcov,'k--',...
+plot(SCM_time_ser_hours,SCM_cldcov,'k--',...
      t_cloud_fraction_hours,cloud_cover,'m',...
      t_cloud_fraction_hours,cloud_cover2,'r')
 xlabel('t (hours)','fontsize',settings.fs)
@@ -26,9 +25,9 @@ set(gcf,'Position',[440 432 765 366])
 subplot(1,1,1)
 
 % Cloud top and base
-plot(time_ser_hours,cltop,'r',SCM_time_ser_hours,SCM_zctop ,'r--',...
-     time_ser_hours,clbas,'k',SCM_time_ser_hours,SCM_zcbase,'k--',...
-                              SCM_time_ser_hours,SCM_zstar,'b--')
+plot(t_cloud_fraction_hours,cloud_top ,'r',SCM_time_ser_hours,SCM_zctop ,'r--',...
+     t_cloud_fraction_hours,cloud_base,'k',SCM_time_ser_hours,SCM_zcbase,'k--',...
+                                           SCM_time_ser_hours,SCM_zstar,'b--')
 xlabel('t (hours)','fontsize',settings.fs)
 ylabel('Cld base/top','fontsize',settings.fs)
 title('Cloud base/top','fontsize',settings.fs)
@@ -55,10 +54,10 @@ if exist('SCM_cloud_fraction')
     contourf(x_les, y_les, cloud_fraction1_sigma1, levels, 'w')
     
     hold on
-    plot(time_ser_hours,cltop,'k', time_ser_hours,clbas,'k')
+    plot(t_cloud_fraction_hours, cloud_top,'k', t_cloud_fraction_hours, cloud_base, 'k')
     hold off
     
-    xlim([min(time_ser_hours), max(time_ser_hours)])
+    xlim([min(t_cloud_fraction_hours), max(t_cloud_fraction_hours)])
     ylim([0,settings.zplottop])
     ylabel('z (m)','fontsize',settings.fs)
     title('LES','fontsize',settings.fs)
@@ -74,10 +73,10 @@ if exist('SCM_cloud_fraction')
     contourf(x_scm, y_scm, SCM_cloud_fraction1_sigma1, levels, 'w')
     
     hold on
-    plot(time_ser_hours,cltop,'k', time_ser_hours,clbas,'k')
+    plot(t_cloud_fraction_hours, cloud_top,'k', t_cloud_fraction_hours, cloud_base, 'k')
     hold off
     
-    xlim([min(time_ser_hours), max(time_ser_hours)])
+    xlim([min(t_cloud_fraction_hours), max(t_cloud_fraction_hours)])
     ylim([0,settings.zplottop])
     xlabel('t (hours)','fontsize',settings.fs)
     ylabel('z (m)','fontsize',settings.fs)
@@ -101,10 +100,10 @@ if exist('SCM_cloud_fraction')
     contourf(x_les, y_les, cloud_fraction2_sigma2, levels, 'w')
     
     hold on
-    plot(time_ser_hours,cltop,'k', time_ser_hours,clbas,'k')
+    plot(t_cloud_fraction_hours, cloud_top,'k', t_cloud_fraction_hours, cloud_base, 'k')
     hold off
     
-    xlim([min(time_ser_hours), max(time_ser_hours)])
+    xlim([min(t_cloud_fraction_hours), max(t_cloud_fraction_hours)])
     ylim([0,settings.zplottop])
     ylabel('z (m)','fontsize',settings.fs)
     title('LES','fontsize',settings.fs)
@@ -120,10 +119,10 @@ if exist('SCM_cloud_fraction')
     contourf(x_scm, y_scm, SCM_cloud_fraction2_sigma2, levels, 'w')
     
     hold on
-    plot(time_ser_hours,cltop,'k', time_ser_hours,clbas,'k')
+    plot(t_cloud_fraction_hours, cloud_top,'k', t_cloud_fraction_hours, cloud_base, 'k')
     hold off
     
-    xlim([min(time_ser_hours), max(time_ser_hours)])
+    xlim([min(t_cloud_fraction_hours), max(t_cloud_fraction_hours)])
     ylim([0,settings.zplottop])
     xlabel('t (hours)','fontsize',settings.fs)
     ylabel('z (m)','fontsize',settings.fs)
@@ -147,10 +146,10 @@ if exist('SCM_cloud_fraction')
     contourf(x_les, y_les, cloud_fraction, levels, 'w')
     
     hold on
-    plot(time_ser_hours,cltop,'k', time_ser_hours,clbas,'k')
+    plot(t_cloud_fraction_hours, cloud_top,'k', t_cloud_fraction_hours, cloud_base, 'k')
     hold off
     
-    xlim([min(time_ser_hours), max(time_ser_hours)])
+    xlim([min(t_cloud_fraction_hours), max(t_cloud_fraction_hours)])
     ylim([0,settings.zplottop])
     ylabel('z (m)','fontsize',settings.fs)
     title('LES','fontsize',settings.fs)
@@ -166,11 +165,10 @@ if exist('SCM_cloud_fraction')
     contourf(x_scm, y_scm, SCM_cloud_fraction, levels, 'w')
     
     hold on
-    plot(time_ser_hours,cltop,'k', time_ser_hours,clbas,'k')
-    contour(x_les, y_les, cloud_fraction, [0.001,0.001], 'k')
+    plot(t_cloud_fraction_hours, cloud_top,'k', t_cloud_fraction_hours, cloud_base, 'k')
     hold off
     
-    xlim([min(time_ser_hours), max(time_ser_hours)])
+    xlim([min(t_cloud_fraction_hours), max(t_cloud_fraction_hours)])
     ylim([0,settings.zplottop])
     xlabel('t (hours)','fontsize',settings.fs)
     ylabel('z (m)','fontsize',settings.fs)

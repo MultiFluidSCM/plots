@@ -15,7 +15,13 @@ plot_timeseries_panels(settings, 'subgridMoistureFluxes', 4);
 plot_timeseries_panels(settings, 'totalMoistureFluxes', 4);
 plot_timeseries_panels(settings, 'additionalForcing', 4);
 
-for i = 1:length(time_s)
+for kt = 1:length(settings.times_to_plot)
+    
+    % Time
+    t = settings.times_to_plot(kt);
+    % Find the nearest profiles (in time) for the LES and SCM data
+    [SCM_t, i] = min(abs(SCM_times - t));
+    
     % 8-panel plot of mean fluid variables
     profiles = {
         'updraftFraction',...
