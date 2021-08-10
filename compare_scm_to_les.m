@@ -1,4 +1,4 @@
-function rmse_cloud = compare_scm_to_les(settings)
+function rmse_mean = compare_scm_to_les(settings)
 % Compare SCM results with LES
 
 % Data are from LES of ARM case (Brown et al.)
@@ -33,35 +33,21 @@ if settings.plot_original_figures
     plot_higher_moments
 end
 
-% Data to be used for calculating the RMS error relative to LES data
-SCM_s2_corr = SCM_sigma2(:,3);
-SCM_w2_corr = SCM_w_2(:,3);
-SCM_q2_corr = SCM_ql_2(:,3);
-SCM_cb_corr = SCM_zcbase(:);
-SCM_ct_corr = SCM_zctop(:);
-SCM_cc_corr = SCM_cldcov(:);
-
-% Remove NaN values
-SCM_s2_corr(isnan(SCM_s2_corr)) = 0;
-SCM_w2_corr(isnan(SCM_w2_corr)) = 0;
-SCM_q2_corr(isnan(SCM_q2_corr)) = 0;
-SCM_cb_corr(isnan(SCM_cb_corr)) = 0;
-SCM_ct_corr(isnan(SCM_ct_corr)) = 0;
-SCM_cc_corr(isnan(SCM_cc_corr)) = 0;
-
 % Calculate RMSE and combine
-rmse_cbase = rmse(clbas, interpolate_timeseries(time_ser_hours, SCM_time_ser_hours, SCM_cb_corr))/max(clbas);
-rmse_ctop  = rmse(cltop, interpolate_timeseries(time_ser_hours, SCM_time_ser_hours, SCM_ct_corr)) /max(cltop);
-rmse_ccov  = rmse(totc,  interpolate_timeseries(time_ser_hours, SCM_time_ser_hours, SCM_cc_corr))/max(totc);
-rmse_sigma = rmse(sigma2(1:140,3), interpolate_timeseries(z(1:140), SCM_zp, SCM_s2_corr))/max(sigma2(1:140,3));
-rmse_w2    = rmse(   w_2(1:140,3), interpolate_timeseries(z(1:140), SCM_zw, SCM_w2_corr))/max(   w_2(1:140,3));
-rmse_ql2   = rmse(  ql_2(1:140,3), interpolate_timeseries(z(1:140), SCM_zw, SCM_q2_corr))/max(  ql_2(1:140,3));
+rmse_sigma = rmse_all_times(times, z, sigma_2, SCM_times, SCM_zp, SCM_sigma2);
+rmse_w_2   = rmse_all_times(times, z, w_2,     SCM_times, SCM_zw, SCM_w_2);
+rmse_b_2   = rmse_all_times(times, z, b_2,     SCM_times, SCM_zw, SCM_b_2_est);
+rmse_e_2   = rmse_all_times(times, z, e_2,     SCM_times, SCM_zw, SCM_e2_res+SCM_e2_sg);
+rmse_qv_2  = rmse_all_times(times, z, qv_2,    SCM_times, SCM_zw, SCM_qv_2);
+rmse_ql_2  = rmse_all_times(times, z, ql_2,    SCM_times, SCM_zw, SCM_ql_2);
+rmse_mean  = (rmse_sigma + rmse_w_2 + rmse_b_2 + rmse_e_2 + rmse_qv_2 + rmse_ql_2)/6;
 
-rmse_cloud = (rmse_cbase + rmse_ctop + rmse_ccov + rmse_sigma + rmse_w2 + rmse_ql2)/6;
-% rmse_cloud = (rmse_cbase + rmse_ctop + 3*rmse_sigma)/5;
-% rmse_cloud = (rmse_cbase + rmse_ctop + rmse_sigma)/3;
-% rmse_cloud = (rmse_cbase + rmse_ctop + rmse_ccov + rmse_sigma)/4;
-% rmse_cloud = (rmse_cbase + rmse_ctop + rmse_ccov)/3;
-% rmse_cloud = (rmse_cbase + rmse_ctop)/2;
-rmse_cloud
+sprintf('RMSE of sigma2: %d.4f', rmse_sigma);
+sprintf('RMSE of     w2: %d.4f', rmse_w_2);
+sprintf('RMSE of     b2: %d.4f', rmse_b_2);
+sprintf('RMSE of     e2: %d.4f', rmse_e_2);
+sprintf('RMSE of    qv2: %d.4f', rmse_qv_2);
+sprintf('RMSE of    ql2: %d.4f', rmse_ql_2);
+sprintf('RMSE mean     : %d.4f', rmse_mean);
+
 end

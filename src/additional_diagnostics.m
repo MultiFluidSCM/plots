@@ -45,7 +45,8 @@ SCM_thv_1 = SCM_th_1.*(1 + 0.61*SCM_rv_1 - SCM_rl_1);
 SCM_thv_2 = SCM_th_2.*(1 + 0.61*SCM_rv_2 - SCM_rl_2);
 SCM_thv_mean = SCM_th_mean.*(1 + 0.61*SCM_rv_mean - SCM_rl_mean);
 
-SCM_est_buoyv = settings.gravity*(SCM_thv_2 - SCM_thv_mean)./SCM_thv_mean;
+% Estimate of the buoyancy
+SCM_b_2_est = settings.gravity*(SCM_thv_2 - SCM_thv_mean)./SCM_thv_mean;
 
 % Tidy cases with cloud base at lid
 % nocloud = clbas > 4000;

@@ -100,8 +100,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(SCM_buoy(:,SCM_i),SCM_zw,'k--',...
-         b(:,LES_i),z,'m', SCM_est_buoyv(:,SCM_i),SCM_zw,'m--')
+    plot(SCM_b(:,SCM_i),SCM_zw,'k--',...
+         b(:,LES_i),z,'m', SCM_b_2_est(:,SCM_i),SCM_zw,'m--')
     hold off
     xlim([-0.1,0.05])
     ylim([0,settings.zplottop])
