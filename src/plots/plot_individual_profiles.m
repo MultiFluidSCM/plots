@@ -5,11 +5,11 @@ for kt = 1:length(settings.times_to_plot)
     t = settings.times_to_plot(kt);
     
     % Find the nearest profiles (in time) for the LES and SCM data
-    [LES_t, LES_i] = min(abs(    times - t));
+    [LES_t, LES_i] = min(abs(LES_times - t));
     [SCM_t, SCM_i] = min(abs(SCM_times - t));
     
     % SCM time in hours
-    t_hours = SCM_t/3600;
+    t_hours = SCM_times(SCM_i)/3600;
     
     % Get cloud base and boundary layer height from SCM
     [LES_t_cloud, LES_i_cloud] = min(abs(t_cloud_fraction - t));
@@ -23,9 +23,11 @@ for kt = 1:length(settings.times_to_plot)
     clf('reset')
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
+    
     hold on
-    plot(sigma_2(:,LES_i),z,'r',SCM_sigma2(:,SCM_i),SCM_zp,'r--')
+    plot(LES_sigma_2(:,LES_i),LES_z,'r',SCM_sigma2(:,SCM_i),SCM_zp,'r--')
     hold off
+    
     % xlim([0,0.5])
     xlim([0,1])
     ylim([0,settings.zplottop])
@@ -43,8 +45,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(w_1(:,LES_i),z,'b',SCM_w_1(:,SCM_i),SCM_zw,'b--',...
-         w_2(:,LES_i),z,'r',SCM_w_2(:,SCM_i),SCM_zw,'r--')
+    plot(LES_w_1(:,LES_i),LES_z,'b',SCM_w_1(:,SCM_i),SCM_zw,'b--',...
+         LES_w_2(:,LES_i),LES_z,'r',SCM_w_2(:,SCM_i),SCM_zw,'r--')
     hold off
     xlim([-0.5,2.5])
     ylim([0,settings.zplottop])
@@ -62,8 +64,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(th_1(:,LES_i),z,'b',SCM_th_1(:,SCM_i),SCM_zw,'b--',...
-         th_2(:,LES_i),z,'r',SCM_th_2(:,SCM_i),SCM_zw,'r--')
+    plot(LES_th_1(:,LES_i),LES_z,'b',SCM_th_1(:,SCM_i),SCM_zw,'b--',...
+         LES_th_2(:,LES_i),LES_z,'r',SCM_th_2(:,SCM_i),SCM_zw,'r--')
     hold off
     xlim([300,320])
     ylim([0,settings.zplottop])
@@ -81,8 +83,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(thv_1(:,LES_i),z,'b',SCM_thv_1(:,SCM_i),SCM_zw,'b--',...
-         thv_2(:,LES_i),z,'r',SCM_thv_2(:,SCM_i),SCM_zw,'r--')
+    plot(LES_thv_1(:,LES_i),LES_z,'b',SCM_thv_1(:,SCM_i),SCM_zw,'b--',...
+         LES_thv_2(:,LES_i),LES_z,'r',SCM_thv_2(:,SCM_i),SCM_zw,'r--')
     hold off
     xlim([300,320])
     ylim([0,settings.zplottop])
@@ -100,8 +102,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(SCM_b(:,SCM_i),SCM_zw,'k--',...
-         b(:,LES_i),z,'m', SCM_b_2_est(:,SCM_i),SCM_zw,'m--')
+    plot(SCM_buoy(:,SCM_i),SCM_zw,'k--',...
+         LES_b_2(:,LES_i),LES_z,'m', SCM_b_2_est(:,SCM_i),SCM_zw,'m--')
     hold off
     xlim([-0.1,0.05])
     ylim([0,settings.zplottop])
@@ -119,8 +121,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(q_1(:,LES_i),z,'b',SCM_q_1(:,SCM_i),SCM_zw,'b--',...
-         q_2(:,LES_i),z,'r',SCM_q_2(:,SCM_i),SCM_zw,'r--')
+    plot(LES_q_1(:,LES_i),LES_z,'b',SCM_q_1(:,SCM_i),SCM_zw,'b--',...
+         LES_q_2(:,LES_i),LES_z,'r',SCM_q_2(:,SCM_i),SCM_zw,'r--')
     hold off
     xlim([0,0.02])
     ylim([0,settings.zplottop])
@@ -138,8 +140,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(qv_1(:,LES_i),z,'b',SCM_qv_1(:,SCM_i),SCM_zw,'b--',...
-         qv_2(:,LES_i),z,'r',SCM_qv_2(:,SCM_i),SCM_zw,'r--')
+    plot(LES_qv_1(:,LES_i),LES_z,'b',SCM_qv_1(:,SCM_i),SCM_zw,'b--',...
+         LES_qv_2(:,LES_i),LES_z,'r',SCM_qv_2(:,SCM_i),SCM_zw,'r--')
     hold off
     xlim([0,0.02])
     ylim([0,settings.zplottop])
@@ -157,8 +159,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(1e3*ql_1(:,LES_i),z,'b',1e3*SCM_ql_1(:,SCM_i),SCM_zw,'b--',...
-         1e3*ql_2(:,LES_i),z,'r',1e3*SCM_ql_2(:,SCM_i),SCM_zw,'r--')
+    plot(1e3*LES_ql_1(:,LES_i),LES_z,'b',1e3*SCM_ql_1(:,SCM_i),SCM_zw,'b--',...
+         1e3*LES_ql_2(:,LES_i),LES_z,'r',1e3*SCM_ql_2(:,SCM_i),SCM_zw,'r--')
     hold off
     xlim([0,1.2])
     ylim([0,settings.zplottop])
@@ -176,7 +178,7 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(wb_res2(:,LES_i),z,'k',SCM_buoy_flux_res(:,SCM_i),SCM_zw,'k--')
+    plot(LES_wb_res2(:,LES_i),LES_z,'k',SCM_buoy_flux_res(:,SCM_i),SCM_zw,'k--')
     hold off
     xlim([-2e-3,2e-3])
     ylim([0,settings.zplottop])
@@ -194,7 +196,7 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(moisture_flux_res(:,LES_i),z,'k',SCM_moisture_flux_res(:,SCM_i),SCM_zw,'k--')
+    plot(LES_moisture_flux_res(:,LES_i),LES_z,'k',SCM_moisture_flux_res(:,SCM_i),SCM_zw,'k--')
     hold off
     xlim([0,3e-4])
     ylim([0,settings.zplottop])
@@ -212,7 +214,7 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(vapour_flux_res(:,LES_i),z,'k',SCM_vapour_flux_res(:,SCM_i),SCM_zw,'k--')
+    plot(LES_vapour_flux_res(:,LES_i),LES_z,'k',SCM_vapour_flux_res(:,SCM_i),SCM_zw,'k--')
     hold off
     xlim([0,3e-4])
     ylim([0,settings.zplottop])
@@ -230,7 +232,7 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(liquid_flux_res(:,LES_i),z,'k',SCM_liquid_flux_res(:,SCM_i),SCM_zw,'k--')
+    plot(LES_liquid_flux_res(:,LES_i),LES_z,'k',SCM_liquid_flux_res(:,SCM_i),SCM_zw,'k--')
     hold off
     xlim([0,5e-5])
     ylim([0,settings.zplottop])
@@ -252,8 +254,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(wb_res1(:,LES_i),z,'b',wb_res1(:,LES_i),z,'b--',...
-         wb_res2(:,LES_i),z,'r',wb_res2(:,LES_i),z,'r--')
+    plot(LES_wb_res1(:,LES_i),LES_z,'b',LES_wb_res1(:,LES_i),LES_z,'b--',...
+         LES_wb_res2(:,LES_i),LES_z,'r',LES_wb_res2(:,LES_i),LES_z,'r--')
     hold off
     xlim([-2e-3,2e-3])
     ylim([0,settings.zplottop])
@@ -271,8 +273,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(wb_sg1(:,LES_i),z,'b',wb_sg1(:,LES_i),z,'b--',...
-         wb_sg2(:,LES_i),z,'r',wb_sg2(:,LES_i),z,'r--')
+    plot(LES_wb_sg1(:,LES_i),LES_z,'b',LES_wb_sg1(:,LES_i),LES_z,'b--',...
+         LES_wb_sg2(:,LES_i),LES_z,'r',LES_wb_sg2(:,LES_i),LES_z,'r--')
     hold off
     xlim([-2e-3,2e-3])
     ylim([0,settings.zplottop])
@@ -291,8 +293,8 @@ for kt = 1:length(settings.times_to_plot)
         subplot(1,1,1)
         indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
         hold on
-        plot(wqv_res1(:,LES_i),z,'b',SCM_wq_res1(:,SCM_i),SCM_zw,'b--',...
-             wqv_res2(:,LES_i),z,'r',SCM_wq_res2(:,SCM_i),SCM_zw,'r--')
+        plot(LES_wqv_res1(:,LES_i),LES_z,'b',SCM_wq_res1(:,SCM_i),SCM_zw,'b--',...
+             LES_wqv_res2(:,LES_i),LES_z,'r',SCM_wq_res2(:,SCM_i),SCM_zw,'r--')
         hold off
         xlim([-5e2,5e2])
         ylim([0,settings.zplottop])
@@ -312,8 +314,8 @@ for kt = 1:length(settings.times_to_plot)
         subplot(1,1,1)
         indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
         hold on
-        plot(wqv_sg1(:,LES_i),z,'b',SCM_wq_sg1(:,SCM_i),SCM_zw,'b--',...
-             wqv_sg2(:,LES_i),z,'r',SCM_wq_sg2(:,SCM_i),SCM_zw,'r--')
+        plot(LES_wqv_sg1(:,LES_i),LES_z,'b',SCM_wq_sg1(:,SCM_i),SCM_zw,'b--',...
+             LES_wqv_sg2(:,LES_i),LES_z,'r',SCM_wq_sg2(:,SCM_i),SCM_zw,'r--')
         hold off
         xlim([-5e2,5e2])
         ylim([0,settings.zplottop])
@@ -333,7 +335,7 @@ for kt = 1:length(settings.times_to_plot)
         subplot(1,1,1)
         indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
         hold on
-        plot(wqv_res1(:,LES_i)+wqv_res2(:,LES_i)+wqv_sg1(:,LES_i)+wqv_sg2(:,LES_i),z,'k',...
+        plot(LES_wqv_res1(:,LES_i)+LES_wqv_res2(:,LES_i)+LES_wqv_sg1(:,LES_i)+LES_wqv_sg2(:,LES_i),LES_z,'k',...
              SCM_wq_res1(:,SCM_i)+SCM_wq_res2(:,SCM_i)+SCM_wq_sg1(:,SCM_i)+SCM_wq_sg2(:,SCM_i),SCM_zw,'k--')
         hold off
         xlim([-1e2,8e2])
@@ -354,8 +356,8 @@ for kt = 1:length(settings.times_to_plot)
         subplot(1,1,1)
         indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
         hold on
-        plot(wth_res1(:,LES_i),z,'b',SCM_wth_res1(:,SCM_i),SCM_zw,'b--',...
-             wth_res2(:,LES_i),z,'r',SCM_wth_res2(:,SCM_i),SCM_zw,'r--')
+        plot(LES_wth_res1(:,LES_i),LES_z,'b',SCM_wth_res1(:,SCM_i),SCM_zw,'b--',...
+             LES_wth_res2(:,LES_i),LES_z,'r',SCM_wth_res2(:,SCM_i),SCM_zw,'r--')
         hold off
         xlim([-8e1,8e1])
         ylim([0,settings.zplottop])
@@ -372,8 +374,8 @@ for kt = 1:length(settings.times_to_plot)
         subplot(1,1,1)
         indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
         hold on
-        plot(wthv_res1(:,LES_i),z,'b',SCM_wth_res1(:,SCM_i),SCM_zw,'b--',...
-             wthv_res2(:,LES_i),z,'r',SCM_wth_res2(:,SCM_i),SCM_zw,'r--')
+        plot(LES_wthv_res1(:,LES_i),LES_z,'b',SCM_wth_res1(:,SCM_i),SCM_zw,'b--',...
+             LES_wthv_res2(:,LES_i),LES_z,'r',SCM_wth_res2(:,SCM_i),SCM_zw,'r--')
         hold off
         xlim([-8e1,8e1])
         ylim([0,settings.zplottop])
@@ -393,8 +395,8 @@ for kt = 1:length(settings.times_to_plot)
         subplot(1,1,1)
         indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
         hold on
-        plot(wth_sg1(:,LES_i),z,'b',SCM_wth_sg1(:,SCM_i),SCM_zw,'b--',...
-             wth_sg2(:,LES_i),z,'r',SCM_wth_sg2(:,SCM_i),SCM_zw,'r--')
+        plot(LES_wth_sg1(:,LES_i),LES_z,'b',SCM_wth_sg1(:,SCM_i),SCM_zw,'b--',...
+             LES_wth_sg2(:,LES_i),LES_z,'r',SCM_wth_sg2(:,SCM_i),SCM_zw,'r--')
         hold off
         xlim([-8e1,8e1])
         ylim([0,settings.zplottop])
@@ -413,8 +415,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(wth_res1(:,LES_i),z,'b',wth_res1(:,LES_i),z,'b--',...
-         wth_res2(:,LES_i),z,'r',wth_res2(:,LES_i),z,'r--')
+    plot(LES_wth_res1(:,LES_i),LES_z,'b',LES_wth_res1(:,LES_i),LES_z,'b--',...
+         LES_wth_res2(:,LES_i),LES_z,'r',LES_wth_res2(:,LES_i),LES_z,'r--')
     hold off
     xlim([-50,50])
     ylim([0,settings.zplottop])
@@ -432,8 +434,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(wth_sg1(:,LES_i),z,'b',wth_sg1(:,LES_i),z,'b--',...
-         wth_sg2(:,LES_i),z,'r',wth_sg2(:,LES_i),z,'r--')
+    plot(LES_wth_sg1(:,LES_i),LES_z,'b',LES_wth_sg1(:,LES_i),LES_z,'b--',...
+         LES_wth_sg2(:,LES_i),LES_z,'r',LES_wth_sg2(:,LES_i),LES_z,'r--')
     hold off
     xlim([-50,50])
     ylim([0,settings.zplottop])
@@ -451,8 +453,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(wthv_res1(:,LES_i),z,'b',wthv_res1(:,LES_i),z,'b--',...
-         wthv_res2(:,LES_i),z,'r',wthv_res2(:,LES_i),z,'r--')
+    plot(LES_wthv_res1(:,LES_i),LES_z,'b',LES_wthv_res1(:,LES_i),LES_z,'b--',...
+         LES_wthv_res2(:,LES_i),LES_z,'r',LES_wthv_res2(:,LES_i),LES_z,'r--')
     hold off
     xlim([-70,70])
     ylim([0,settings.zplottop])
@@ -470,8 +472,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(wthv_sg1(:,LES_i),z,'b',wthv_sg1(:,LES_i),z,'b--',...
-         wthv_sg2(:,LES_i),z,'r',wthv_sg2(:,LES_i),z,'r--')
+    plot(LES_wthv_sg1(:,LES_i),LES_z,'b',LES_wthv_sg1(:,LES_i),LES_z,'b--',...
+         LES_wthv_sg2(:,LES_i),LES_z,'r',LES_wthv_sg2(:,LES_i),LES_z,'r--')
     hold off
     xlim([-70,70])
     ylim([0,settings.zplottop])
@@ -492,8 +494,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(e_res1(:,LES_i),z,'b',SCM_e1_res(:,SCM_i),SCM_zp,'b--',...
-         e_res2(:,LES_i),z,'r',SCM_e2_res(:,SCM_i),SCM_zp,'r--')
+    plot(LES_e_res1(:,LES_i),LES_z,'b',SCM_e1_res(:,SCM_i),SCM_zp,'b--',...
+         LES_e_res2(:,LES_i),LES_z,'r',SCM_e2_res(:,SCM_i),SCM_zp,'r--')
     hold off
     xlim([0,5])
     ylim([0,settings.zplottop])
@@ -511,8 +513,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(e_sg1(:,LES_i),z,'b',SCM_e1_sg(:,SCM_i),SCM_zp,'b--',...
-         e_sg2(:,LES_i),z,'r',SCM_e2_sg(:,SCM_i),SCM_zp,'r--')
+    plot(LES_e_sg1(:,LES_i),LES_z,'b',SCM_e1_sg(:,SCM_i),SCM_zp,'b--',...
+         LES_e_sg2(:,LES_i),LES_z,'r',SCM_e2_sg(:,SCM_i),SCM_zp,'r--')
     hold off
     xlim([0,5])
     ylim([0,settings.zplottop])
@@ -530,8 +532,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(ww_res1(:,LES_i),z,'b',SCM_ww1(:,SCM_i),SCM_zw,'b--',...
-         ww_res2(:,LES_i),z,'r',SCM_ww2(:,SCM_i),SCM_zw,'r--')
+    plot(LES_ww_res1(:,LES_i),LES_z,'b',SCM_ww1(:,SCM_i),SCM_zw,'b--',...
+         LES_ww_res2(:,LES_i),LES_z,'r',SCM_ww2(:,SCM_i),SCM_zw,'r--')
     hold off
     xlim([0,5])
     ylim([0,settings.zplottop])
@@ -549,8 +551,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(ww_sg1(:,LES_i),z,'b',SCM_ww_sg1(:,SCM_i),SCM_zp,'b--',...
-         ww_sg2(:,LES_i),z,'r',SCM_ww_sg2(:,SCM_i),SCM_zp,'r--')
+    plot(LES_ww_sg1(:,LES_i),LES_z,'b',SCM_ww_sg1(:,SCM_i),SCM_zp,'b--',...
+         LES_ww_sg2(:,LES_i),LES_z,'r',SCM_ww_sg2(:,SCM_i),SCM_zp,'r--')
     hold off
     xlim([0,5])
     ylim([0,settings.zplottop])
@@ -568,8 +570,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(thth_res1(:,LES_i),z,'b',SCM_thth1(:,SCM_i),SCM_zw,'b--',...
-         thth_res2(:,LES_i),z,'r',SCM_thth2(:,SCM_i),SCM_zw,'r--')
+    plot(LES_thth_res1(:,LES_i),LES_z,'b',SCM_thth1(:,SCM_i),SCM_zw,'b--',...
+         LES_thth_res2(:,LES_i),LES_z,'r',SCM_thth2(:,SCM_i),SCM_zw,'r--')
     hold off
     xlim([0,10])
     ylim([0,settings.zplottop])
@@ -587,8 +589,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(thth_sg1(:,LES_i),z,'b',SCM_thth_sg1(:,SCM_i),SCM_zw,'b--',...
-         thth_sg2(:,LES_i),z,'r',SCM_thth_sg2(:,SCM_i),SCM_zw,'r--')
+    plot(LES_thth_sg1(:,LES_i),LES_z,'b',SCM_thth_sg1(:,SCM_i),SCM_zw,'b--',...
+         LES_thth_sg2(:,LES_i),LES_z,'r',SCM_thth_sg2(:,SCM_i),SCM_zw,'r--')
     hold off
     xlim([0,3])
     ylim([0,settings.zplottop])
@@ -607,8 +609,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(1e6*qvqv_res1(:,LES_i),z,'b',1e6*SCM_qq1(:,SCM_i),SCM_zw,'b--',...
-         1e6*qvqv_res2(:,LES_i),z,'r',1e6*SCM_qq2(:,SCM_i),SCM_zw,'r--')
+    plot(1e6*LES_qvqv_res1(:,LES_i),LES_z,'b',1e6*SCM_qq1(:,SCM_i),SCM_zw,'b--',...
+         1e6*LES_qvqv_res2(:,LES_i),LES_z,'r',1e6*SCM_qq2(:,SCM_i),SCM_zw,'r--')
     hold off
     xlim([0,40])
     ylim([0,settings.zplottop])
@@ -626,8 +628,8 @@ for kt = 1:length(settings.times_to_plot)
     subplot(1,1,1)
     indicate_cloud_base(settings, LES_z_cloud_base, SCM_z_cloud_base, SCM_z_bl_top)
     hold on
-    plot(1e6*qvqv_sg1(:,LES_i),z,'b',1e6*SCM_qq_sg1(:,SCM_i),SCM_zp,'b--',...
-         1e6*qvqv_sg2(:,LES_i),z,'r',1e6*SCM_qq_sg2(:,SCM_i),SCM_zp,'r--')
+    plot(1e6*LES_qvqv_sg1(:,LES_i),LES_z,'b',1e6*SCM_qq_sg1(:,SCM_i),SCM_zp,'b--',...
+         1e6*LES_qvqv_sg2(:,LES_i),LES_z,'r',1e6*SCM_qq_sg2(:,SCM_i),SCM_zp,'r--')
     hold off
     xlim([0,20])
     ylim([0,settings.zplottop])

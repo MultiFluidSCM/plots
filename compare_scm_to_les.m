@@ -33,21 +33,37 @@ if settings.plot_original_figures
     plot_higher_moments
 end
 
+% Experimental feature to use sigma-weighted variables for the RMS analysis
+% This may help remove biases due to single plumes at the cloud top in the LES data
+if false
+    LES_w_2  = LES_w_2 .*LES_sigma_2;
+    LES_b_2  = LES_b_2 .*LES_sigma_2;
+    LES_e_2  = LES_e_2 .*LES_sigma_2;
+    LES_qv_2 = LES_qv_2.*LES_sigma_2;
+    LES_ql_2 = LES_ql_2.*LES_sigma_2;
+
+    SCM_w_2  = SCM_w_2     .*SCM_sigma2w;
+    SCM_b_2  = SCM_b_2_est .*SCM_sigma2w;
+    SCM_e_2  = SCM_e_2     .*SCM_sigma2;
+    SCM_qv_2 = SCM_qv_2    .*SCM_sigma2w;
+    SCM_ql_2 = SCM_ql_2    .*SCM_sigma2w;
+end
+
 % Calculate RMSE and combine
-rmse_sigma = rmse_all_times(times, z, sigma_2, SCM_times, SCM_zp, SCM_sigma2);
-rmse_w_2   = rmse_all_times(times, z, w_2,     SCM_times, SCM_zw, SCM_w_2);
-rmse_b_2   = rmse_all_times(times, z, b_2,     SCM_times, SCM_zw, SCM_b_2_est);
-rmse_e_2   = rmse_all_times(times, z, e_2,     SCM_times, SCM_zw, SCM_e2_res+SCM_e2_sg);
-rmse_qv_2  = rmse_all_times(times, z, qv_2,    SCM_times, SCM_zw, SCM_qv_2);
-rmse_ql_2  = rmse_all_times(times, z, ql_2,    SCM_times, SCM_zw, SCM_ql_2);
+rmse_sigma = rmse_all_times(LES_times, LES_z, LES_sigma_2, SCM_times, SCM_zp, SCM_sigma2);
+rmse_w_2   = rmse_all_times(LES_times, LES_z, LES_w_2,     SCM_times, SCM_zw, SCM_w_2);
+rmse_b_2   = rmse_all_times(LES_times, LES_z, LES_b_2,     SCM_times, SCM_zw, SCM_b_2_est);
+rmse_e_2   = rmse_all_times(LES_times, LES_z, LES_e_2,     SCM_times, SCM_zp, SCM_e_2);
+rmse_qv_2  = rmse_all_times(LES_times, LES_z, LES_qv_2,    SCM_times, SCM_zw, SCM_qv_2);
+rmse_ql_2  = rmse_all_times(LES_times, LES_z, LES_ql_2,    SCM_times, SCM_zw, SCM_ql_2);
 rmse_mean  = (rmse_sigma + rmse_w_2 + rmse_b_2 + rmse_e_2 + rmse_qv_2 + rmse_ql_2)/6;
 
-sprintf('RMSE of sigma2: %d.4f', rmse_sigma);
-sprintf('RMSE of     w2: %d.4f', rmse_w_2);
-sprintf('RMSE of     b2: %d.4f', rmse_b_2);
-sprintf('RMSE of     e2: %d.4f', rmse_e_2);
-sprintf('RMSE of    qv2: %d.4f', rmse_qv_2);
-sprintf('RMSE of    ql2: %d.4f', rmse_ql_2);
-sprintf('RMSE mean     : %d.4f', rmse_mean);
+disp(sprintf('RMSE of sigma_2: %0.4f', rmse_sigma));
+disp(sprintf('RMSE of     w_2: %0.4f', rmse_w_2));
+disp(sprintf('RMSE of     b_2: %0.4f', rmse_b_2));
+disp(sprintf('RMSE of     e_2: %0.4f', rmse_e_2));
+disp(sprintf('RMSE of    qv_2: %0.4f', rmse_qv_2));
+disp(sprintf('RMSE of    ql_2: %0.4f', rmse_ql_2));
+disp(sprintf('RMSE mean      : %0.4f', rmse_mean));
 
 end

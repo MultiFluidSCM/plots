@@ -11,26 +11,20 @@ SCM_est_buoy = settings.gravity*(SCM_th_2 - SCM_th_mean)./SCM_th_mean;
 SCM_buoy_flux_res = (SCM_w_2 - SCM_w_1).*SCM_sigma2w.*SCM_est_buoy;
 
 % Estimate resolved moisture flux
-q_pert = q_2 - q;
-moisture_flux_res = (w_2 - w_1).*sigma_2.*q_pert;
-
 SCM_q_mean = SCM_sigma1w.*(SCM_qv_1+SCM_ql_1) + SCM_sigma2w.*(SCM_qv_2+SCM_ql_2);
 SCM_q_pert = SCM_qv_2 + SCM_ql_2 - SCM_q_mean;
 SCM_moisture_flux_res = (SCM_w_2 - SCM_w_1).*SCM_sigma2w.*SCM_q_pert;
+LES_moisture_flux_res = (LES_w_2 - LES_w_1).*LES_sigma_2.*(LES_q_2 - LES_q);
 
 % Estimate resolved vapour flux
-qv_mean = sigma_1.*qv_1 + sigma_2.*qv_2;
-vapour_flux_res = (w_2 - w_1).*sigma_2.*(qv_2 - qv_mean);
-
 SCM_qv_mean = SCM_sigma1w.*SCM_qv_1 + SCM_sigma2w.*SCM_qv_2;
 SCM_vapour_flux_res = (SCM_w_2 - SCM_w_1).*SCM_sigma2w.*(SCM_qv_2 - SCM_qv_mean);
+LES_vapour_flux_res = (LES_w_2 - LES_w_1).*LES_sigma_2.*(LES_qv_2 - LES_qv);
 
 % Estimate resolved liquid flux
-ql_mean = sigma_1.*ql_1 + sigma_2.*ql_2;
-liquid_flux_res = (w_2 - w_1).*sigma_2.*(ql_2 - ql_mean);
-
 SCM_ql_mean = SCM_sigma1w.*SCM_ql_1 + SCM_sigma2w.*SCM_ql_2;
 SCM_liquid_flux_res = (SCM_w_2 - SCM_w_1).*SCM_sigma2w.*(SCM_ql_2 - SCM_ql_mean);
+LES_liquid_flux_res = (LES_w_2 - LES_w_1).*LES_sigma_2.*(LES_ql_2 - LES_ql);
 
 % Calculate mixing ratios from specific humidities
 SCM_rv_1 = SCM_qv_1./(1-SCM_qv_1);
@@ -48,6 +42,6 @@ SCM_thv_mean = SCM_th_mean.*(1 + 0.61*SCM_rv_mean - SCM_rl_mean);
 % Estimate of the buoyancy
 SCM_b_2_est = settings.gravity*(SCM_thv_2 - SCM_thv_mean)./SCM_thv_mean;
 
-% Tidy cases with cloud base at lid
-% nocloud = clbas > 4000;
-% clbas = clbas.*(1 - nocloud);
+% Total TKE
+SCM_e_1 = SCM_e1_res+SCM_e1_sg;
+SCM_e_2 = SCM_e2_res+SCM_e2_sg;

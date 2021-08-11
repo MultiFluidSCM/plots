@@ -8,13 +8,14 @@ field_LES(isnan(field_LES)) = 0;
 field_SCM(isnan(field_SCM)) = 0;
 
 % Cycle through the available vertical profiles of the SCM
+total = 0;
 rmse_total = 0;
 for i=1:length(t_SCM)
     % Check if there are any available LES profiles close enough (in time) to be comparable
     [dt_min, j] = min(abs(t_LES - t_SCM(i)));
     
     if dt_min < threshold
-        sprintf('Calculating RMSE between SCM at %d:.0f s and LES at %d:.0f s', t_SCM(i), t_LES(j));
+        disp(sprintf('Calculating RMSE of %s between SCM at %0.0f s and LES at %0.0f s', inputname(6), t_SCM(i), t_LES(j)));
         
         % Arrays must be the same length for rmse function
         length_LES = length(z_LES);
@@ -26,11 +27,15 @@ for i=1:length(t_SCM)
         field_SCM_processed = interpolate_timeseries(z_LES(1:cutoff), z_SCM(1:cutoff), field_SCM(1:cutoff,i));
         
         % Add a normalisation to make it easier to compare deviations of different variables
-        normalisation = mean(abs(field_LES_processed));
+        normalisation = mean(max(abs(field_LES_processed), abs(field_SCM_processed)));
+        normalisation = normalisation + (normalisation == 0);
         
-        rmse_total = rmse_total + rmse(field_LES_processed, field_SCM_processed)/normalisation;
+        total = total + 1;
+        rmse_total = rmse_total + rmse(field_LES_processed, field_SCM_processed)./normalisation;
     end
 end
+
+rmse_total = rmse_total/total;
 
 end
 
