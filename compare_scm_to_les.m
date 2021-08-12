@@ -13,9 +13,6 @@ load_scm_data
 % Book-keeping and extra variables
 additional_diagnostics
 
-% Plot variable changes over time
-plot_timeseries
-
 % Plot each profile for each saved time
 if settings.plot_individual_profiles & (settings.save_figures | settings.save_images)
     
@@ -28,34 +25,32 @@ if settings.plot_individual_profiles & (settings.save_figures | settings.save_im
     end
 end
 
-if settings.plot_original_figures
-    plot_mean_profiles
-    plot_higher_moments
-end
+% Plot variable changes over time
+plot_timeseries
 
 % Experimental feature to use sigma-weighted variables for the RMS analysis
 % This may help remove biases due to single plumes at the cloud top in the LES data
 if false
-    LES_w_2  = LES_w_2 .*LES_sigma_2;
-    LES_b_2  = LES_b_2 .*LES_sigma_2;
-    LES_e_2  = LES_e_2 .*LES_sigma_2;
-    LES_qv_2 = LES_qv_2.*LES_sigma_2;
-    LES_ql_2 = LES_ql_2.*LES_sigma_2;
+    LES.w_2  = LES.w_2 .*LES.sigma_2;
+    LES.b_2  = LES.b_2 .*LES.sigma_2;
+    LES.e_2  = LES.e_2 .*LES.sigma_2;
+    LES.qv_2 = LES.qv_2.*LES.sigma_2;
+    LES.ql_2 = LES.ql_2.*LES.sigma_2;
 
-    SCM_w_2  = SCM_w_2     .*SCM_sigma2w;
-    SCM_b_2  = SCM_b_2_est .*SCM_sigma2w;
-    SCM_e_2  = SCM_e_2     .*SCM_sigma2;
-    SCM_qv_2 = SCM_qv_2    .*SCM_sigma2w;
-    SCM_ql_2 = SCM_ql_2    .*SCM_sigma2w;
+    SCM.w_2  = SCM.w_2     .*SCM.sigma2w;
+    SCM.b_2  = SCM.b_2_est .*SCM.sigma2w;
+    SCM.e_2  = SCM.e_2     .*SCM.sigma2;
+    SCM.qv_2 = SCM.qv_2    .*SCM.sigma2w;
+    SCM.ql_2 = SCM.ql_2    .*SCM.sigma2w;
 end
 
 % Calculate RMSE and combine
-rmse_sigma = rmse_all_times(LES_times, LES_z, LES_sigma_2, SCM_times, SCM_zp, SCM_sigma2);
-rmse_w_2   = rmse_all_times(LES_times, LES_z, LES_w_2,     SCM_times, SCM_zw, SCM_w_2);
-rmse_b_2   = rmse_all_times(LES_times, LES_z, LES_b_2,     SCM_times, SCM_zw, SCM_b_2_est);
-rmse_e_2   = rmse_all_times(LES_times, LES_z, LES_e_2,     SCM_times, SCM_zp, SCM_e_2);
-rmse_qv_2  = rmse_all_times(LES_times, LES_z, LES_qv_2,    SCM_times, SCM_zw, SCM_qv_2);
-rmse_ql_2  = rmse_all_times(LES_times, LES_z, LES_ql_2,    SCM_times, SCM_zw, SCM_ql_2);
+rmse_sigma = rmse_all_times(LES.times, LES.z, LES.sigma_2, SCM.times, SCM.zp, SCM.sigma2);
+rmse_w_2   = rmse_all_times(LES.times, LES.z, LES.w_2,     SCM.times, SCM.zw, SCM.w_2);
+rmse_b_2   = rmse_all_times(LES.times, LES.z, LES.b_2,     SCM.times, SCM.zw, SCM.b_2_est);
+rmse_e_2   = rmse_all_times(LES.times, LES.z, LES.e_2,     SCM.times, SCM.zp, SCM.e_2);
+rmse_qv_2  = rmse_all_times(LES.times, LES.z, LES.qv_2,    SCM.times, SCM.zw, SCM.qv_2);
+rmse_ql_2  = rmse_all_times(LES.times, LES.z, LES.ql_2,    SCM.times, SCM.zw, SCM.ql_2);
 rmse_mean  = (rmse_sigma + rmse_w_2 + rmse_b_2 + rmse_e_2 + rmse_qv_2 + rmse_ql_2)/6;
 
 disp(sprintf('RMSE of sigma_2: %0.4f', rmse_sigma));
@@ -65,5 +60,10 @@ disp(sprintf('RMSE of     e_2: %0.4f', rmse_e_2));
 disp(sprintf('RMSE of    qv_2: %0.4f', rmse_qv_2));
 disp(sprintf('RMSE of    ql_2: %0.4f', rmse_ql_2));
 disp(sprintf('RMSE mean      : %0.4f', rmse_mean));
+
+% Write RMS error to file
+fileID = fopen(fullfile(settings.folders.data_scm, 'rmse.txt'), 'w');
+fprintf(fileID, '%12f', rmse_mean);
+fclose(fileID);
 
 end

@@ -1,7 +1,7 @@
 % Read LES results:
 
-% Default vertical profiles
-load(fullfile(settings.folders.data_les, 'vertical_profiles_default.mat'));
+% Default profiles (all fields are NaN by default)
+LES = load(fullfile(settings.folders.data_les, 'default','profiles.mat'));
 % Examples of vertical profiles for variable phi
 % Mean profile at snapshot 1:                 phi(:,1)
 % Fluid 2 mean at snapshot 1:                 phi2(:,1)
@@ -14,18 +14,17 @@ load(fullfile(settings.folders.data_les, 'vertical_profiles_default.mat'));
 % Total resolved variance:                    sigma1.*phiphi_res1 + sigma2.*phiphi_res2
 % Total resolved flux:                        wphi_res1 + wphi_res2
 
-% Vertical profiles for test case
-file = fullfile(settings.folders.test_case, 'vertical_profiles.mat');
-if isfile(file)
-    load(file);
-else
-    disp('Could not find LES vertical profiles to compare with');
-end
+% Profiles for test case
+file = fullfile(settings.folders.data_les, settings.test_case, 'profiles.mat');
 
-% Cloud properties (high resolution in time)
-file = fullfile(settings.folders.test_case, 'cloud_fraction.mat');
 if isfile(file)
-    load(file);
+    LES_new = load(file);
+    
+    % Replace default profiles with test case data
+    LES_fieldnames = fieldnames(LES_new);
+    for z = 1:length(LES_fieldnames)
+      LES.(LES_fieldnames{z}) = LES_new.(LES_fieldnames{z});
+    end
 else
     disp('Could not find LES vertical profiles to compare with');
 end

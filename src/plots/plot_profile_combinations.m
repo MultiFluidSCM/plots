@@ -1,26 +1,18 @@
-plot_timeseries_panels(settings, 'updraftBuoyancy', 4);
-plot_timeseries_panels(settings, 'updraftFraction', 4);
-plot_timeseries_panels(settings, 'verticalVelocity', 4);
-plot_timeseries_panels(settings, 'resolvedMoistureFlux', 4);
-plot_timeseries_panels(settings, 'resolvedMoistureFluxes', 4);
-plot_timeseries_panels(settings, 'resolvedVapourFlux', 4);
-plot_timeseries_panels(settings, 'resolvedLiquidFlux', 4);
-plot_timeseries_panels(settings, 'resolvedThetaFluxes', 4);
-plot_timeseries_panels(settings, 'resolvedThetavFluxes', 4);
-% plot_timeseries_panels(settings, 'resolvedTemperatureFluxes', 4);
-% plot_timeseries_panels(settings, 'resolvedTemperatureMoistFluxes', 4);
-plot_timeseries_panels(settings, 'subgridTemperatureFluxes', 4);
-plot_timeseries_panels(settings, 'subgridTemperatureMoistFluxes', 4);
-plot_timeseries_panels(settings, 'subgridMoistureFluxes', 4);
-plot_timeseries_panels(settings, 'totalMoistureFluxes', 4);
-plot_timeseries_panels(settings, 'additionalForcing', 4);
+plot_timeseries_panels(settings, 'sigma_2', timeseries_indices);
+plot_timeseries_panels(settings, 'w',       timeseries_indices);
+plot_timeseries_panels(settings, 'b_2',     timeseries_indices);
+plot_timeseries_panels(settings, 'tke_res', timeseries_indices);
+plot_timeseries_panels(settings, 'tke_sg',  timeseries_indices);
+plot_timeseries_panels(settings, 'wb_2_res',  timeseries_indices);
+plot_timeseries_panels(settings, 'wqv_res', timeseries_indices);
+plot_timeseries_panels(settings, 'wqv_sg',  timeseries_indices);
 
 for kt = 1:length(settings.times_to_plot)
     
     % Time
     t = settings.times_to_plot(kt);
     % Find the nearest profiles (in time) for the LES and SCM data
-    [SCM_t, i] = min(abs(SCM_times - t));
+    [SCM.t, i] = min(abs(SCM.times - t));
     
     % 8-panel plot of mean fluid variables
     profiles = {

@@ -49,6 +49,6 @@ function plot_multiple_panels(settings, name, profiles_to_plot, n_columns)
     
     
     
-    file_output = join([name, '_all'],"");
+    file_output = join(['all_', name],"");
     save_figure(settings, f, file_output);
 end
