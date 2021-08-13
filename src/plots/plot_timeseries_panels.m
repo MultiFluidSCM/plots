@@ -11,6 +11,6 @@ function plot_timeseries_panels(settings, name, indices)
     
     %Open files and compose into multi-panel figure
     if length(profiles_to_plot) > 1
-        plot_multiple_panels(settings, name, profiles_to_plot, min(5, length(profiles_to_plot)))
+        plot_multiple_panels(settings, join(['times_',name],''), profiles_to_plot, min(5, length(profiles_to_plot)))
     end
 end

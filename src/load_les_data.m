@@ -23,7 +23,7 @@ if isfile(file)
     % Replace default profiles with test case data
     LES_fieldnames = fieldnames(LES_new);
     for z = 1:length(LES_fieldnames)
-      LES.(LES_fieldnames{z}) = LES_new.(LES_fieldnames{z});
+        LES.(LES_fieldnames{z}) = LES_new.(LES_fieldnames{z});
     end
 else
     disp('Could not find LES vertical profiles to compare with');

@@ -36,7 +36,10 @@ set(gca,'fontsize',settings.fs,'XTick',[1:14])
 saveas(fig, fullfile(settings.folders.root,  join(["cloud_height_",settings.folders.id,".png"], "")));
 save_figure(settings, fig, "timeseries_cloud_height");
 
+
 if isfield(SCM, 'cloud_fraction')
+    xlimits = [min(min(LES.t_cloud_fraction_hours),min(SCM.time_ser_hours)), max(max(LES.t_cloud_fraction_hours),max(SCM.time_ser_hours))];
+    
     % Grid for contour plot
     [x_SCM, y_SCM] = meshgrid(SCM.time_ser_hours, SCM.zw);
     [x_LES, y_LES] = meshgrid(LES.t_cloud_fraction_hours, LES.z_cloud_fraction);
@@ -57,7 +60,7 @@ if isfield(SCM, 'cloud_fraction')
     plot(LES.t_cloud_fraction_hours, LES.cloud_top,'k', LES.t_cloud_fraction_hours, LES.cloud_base, 'k')
     hold off
     
-    xlim([min(LES.t_cloud_fraction_hours), max(LES.t_cloud_fraction_hours)])
+    xlim(xlimits)
     ylim([0,settings.zplottop])
     ylabel('z (m)','fontsize',settings.fs)
     title('LES','fontsize',settings.fs)
@@ -77,7 +80,7 @@ if isfield(SCM, 'cloud_fraction')
          LES.t_cloud_fraction_hours, LES.cloud_base, 'k')
     hold off
     
-    xlim([min(LES.t_cloud_fraction_hours), max(LES.t_cloud_fraction_hours)])
+    xlim(xlimits)
     ylim([0,settings.zplottop])
     xlabel('t (hours)','fontsize',settings.fs)
     ylabel('z (m)','fontsize',settings.fs)
@@ -105,7 +108,7 @@ if isfield(SCM, 'cloud_fraction')
          LES.t_cloud_fraction_hours, LES.cloud_base, 'k')
     hold off
     
-    xlim([min(LES.t_cloud_fraction_hours), max(LES.t_cloud_fraction_hours)])
+    xlim(xlimits)
     ylim([0,settings.zplottop])
     ylabel('z (m)','fontsize',settings.fs)
     title('LES','fontsize',settings.fs)
@@ -125,7 +128,7 @@ if isfield(SCM, 'cloud_fraction')
          LES.t_cloud_fraction_hours, LES.cloud_base, 'k')
     hold off
     
-    xlim([min(LES.t_cloud_fraction_hours), max(LES.t_cloud_fraction_hours)])
+    xlim(xlimits)
     ylim([0,settings.zplottop])
     xlabel('t (hours)','fontsize',settings.fs)
     ylabel('z (m)','fontsize',settings.fs)
@@ -153,7 +156,7 @@ if isfield(SCM, 'cloud_fraction')
          LES.t_cloud_fraction_hours, LES.cloud_base, 'k')
     hold off
     
-    xlim([min(LES.t_cloud_fraction_hours), max(LES.t_cloud_fraction_hours)])
+    xlim(xlimits)
     ylim([0,settings.zplottop])
     ylabel('z (m)','fontsize',settings.fs)
     title('LES','fontsize',settings.fs)
@@ -173,7 +176,7 @@ if isfield(SCM, 'cloud_fraction')
          LES.t_cloud_fraction_hours, LES.cloud_base, 'k')
     hold off
     
-    xlim([min(LES.t_cloud_fraction_hours), max(LES.t_cloud_fraction_hours)])
+    xlim(xlimits)
     ylim([0,settings.zplottop])
     xlabel('t (hours)','fontsize',settings.fs)
     ylabel('z (m)','fontsize',settings.fs)
