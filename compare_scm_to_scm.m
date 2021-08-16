@@ -43,19 +43,19 @@ for kt = 1:4
         choose_case
     
         % Read SCM results
-        fname = ['SCM_',scheme];
+        fname = ['SCM.',scheme];
         load(fname);
 
         % Estimate updraft buoyancy
-        SCM_th_mean = SCM_sigma1w.*SCM_th_1 + SCM_sigma2w.*SCM_th_2;
-        SCM_est_buoy = gravity*(SCM_th_2 - SCM_th_mean)./SCM_th_mean;
+        SCM.th_mean = SCM.sigma1w.*SCM.th_1 + SCM.sigma2w.*SCM.th_2;
+        SCM.est_buoy = gravity*(SCM.th_2 - SCM.th_mean)./SCM.th_mean;
 
         % Estimate resolved buoyancy flux
         % buoy_flux_res = (w_2 - w_1).*sigma2.*buoy;
-        SCM_buoy_flux_res = (SCM_w_2 - SCM_w_1).*SCM_sigma2w.*SCM_est_buoy;
+        SCM.buoy_flux_res = (SCM.w_2 - SCM.w_1).*SCM.sigma2w.*SCM.est_buoy;
 
         % Time
-        t = SCM_times(kt);
+        t = SCM.times(kt);
         % In hours
         t_hours = t/3600;
 
@@ -64,7 +64,7 @@ for kt = 1:4
         if icase == 1
             hold off
         end
-        plot(SCM_sigma2(:,kt),SCM_zp,ls)
+        plot(SCM.sigma2(:,kt),SCM.zp,ls)
         ylim([0,zplottop])
         xlabel('sigma 2','fontsize',fs)
         ylabel(' z(m) ','fontsize',fs)
@@ -78,8 +78,8 @@ for kt = 1:4
         if icase == 1
             hold off
         end
-        plot(SCM_w_1(:,kt),SCM_zw,[ls,'--'],...
-             SCM_w_2(:,kt),SCM_zw,ls)
+        plot(SCM.w_1(:,kt),SCM.zw,[ls,'--'],...
+             SCM.w_2(:,kt),SCM.zw,ls)
         ylim([0,zplottop])
         xlabel('w 1 and 2 (m/s)','fontsize',fs)
         ylabel(' z(m) ','fontsize',fs)
@@ -93,8 +93,8 @@ for kt = 1:4
         if icase == 1
             hold off
         end
-        plot(SCM_th_1(:,kt),SCM_zw,[ls,'--'],...
-             SCM_th_2(:,kt),SCM_zw,ls)
+        plot(SCM.th_1(:,kt),SCM.zw,[ls,'--'],...
+             SCM.th_2(:,kt),SCM.zw,ls)
         ylim([0,zplottop])
         xlabel('Theta 1 and 2 (K)','fontsize',fs)
         ylabel(' z(m) ','fontsize',fs)
@@ -108,7 +108,7 @@ for kt = 1:4
         if icase == 1
             hold off
         end
-        plot(SCM_buoy(:,kt),SCM_zw,ls,SCM_est_buoy(:,kt),SCM_zw,[ls,'--'])
+        plot(SCM.buoy(:,kt),SCM.zw,ls,SCM.est_buoy(:,kt),SCM.zw,[ls,'--'])
         ylim([0,zplottop])
         xlabel('Buoyancy (m/s^2)','fontsize',fs)
         ylabel(' z(m) ','fontsize',fs)
@@ -123,7 +123,7 @@ for kt = 1:4
         if icase == 1
             hold off
         end
-        plot(SCM_q_1(:,kt),SCM_zw,[ls,'--'],SCM_q_2(:,kt),SCM_zw,ls)
+        plot(SCM.q_1(:,kt),SCM.zw,[ls,'--'],SCM.q_2(:,kt),SCM.zw,ls)
         ylim([0,zplottop])
         xlabel('q_T 1 & 2','fontsize',fs)
         ylabel(' z(m) ','fontsize',fs)
@@ -137,8 +137,8 @@ for kt = 1:4
         if icase == 1
             hold off
         end
-        plot(SCM_qv_1(:,kt),SCM_zw,[ls,'--'],...
-             SCM_qv_2(:,kt),SCM_zw,ls)
+        plot(SCM.qv_1(:,kt),SCM.zw,[ls,'--'],...
+             SCM.qv_2(:,kt),SCM.zw,ls)
         ylim([0,zplottop])
         xlabel('q_v 1 & 2','fontsize',fs)
         ylabel(' z(m) ','fontsize',fs)
@@ -152,8 +152,8 @@ for kt = 1:4
         if icase == 1
             hold off
         end
-        plot(1e3*SCM_ql_1(:,kt),SCM_zw,[ls,'--'],...
-             1e3*SCM_ql_2(:,kt),SCM_zw,ls)
+        plot(1e3*SCM.ql_1(:,kt),SCM.zw,[ls,'--'],...
+             1e3*SCM.ql_2(:,kt),SCM.zw,ls)
         ylim([0,zplottop])
         xlabel('q_l 1 and 2 (g/kg)','fontsize',fs)
         ylabel(' z(m) ','fontsize',fs)
@@ -167,7 +167,7 @@ for kt = 1:4
         if icase == 1
             hold off
         end
-        plot(SCM_buoy_flux_res(:,kt),SCM_zw,ls)
+        plot(SCM.buoy_flux_res(:,kt),SCM.zw,ls)
         ylim([0,zplottop])
         xlabel('res wb (m^2/s^3)','fontsize',fs)
         ylabel(' z(m) ','fontsize',fs)
@@ -191,11 +191,11 @@ for kt = 1:4
         choose_case
     
         % Read SCM results
-        fname = ['SCM_',scheme];
+        fname = ['SCM.',scheme];
         load(fname);
 
         % Time
-        t = SCM_times(kt);
+        t = SCM.times(kt);
         % In hours
         t_hours = t/3600;
 
@@ -204,8 +204,8 @@ for kt = 1:4
         if icase == 1
             hold off
         end
-        plot(SCM_e1_res(:,kt),SCM_zp,[ls,'--'],...
-             SCM_e2_res(:,kt),SCM_zp,ls)
+        plot(SCM.e1_res(:,kt),SCM.zp,[ls,'--'],...
+             SCM.e2_res(:,kt),SCM.zp,ls)
         ylim([0,zplottop])
         xlabel('Res tke (m^2/s^2)','fontsize',fs)
         ylabel(' z(m) ','fontsize',fs)
@@ -219,8 +219,8 @@ for kt = 1:4
         if icase == 1
             hold off
         end
-        plot(SCM_e1_sg(:,kt),SCM_zp,[ls,'--'],...
-             SCM_e2_sg(:,kt),SCM_zp,ls)
+        plot(SCM.e1_sg(:,kt),SCM.zp,[ls,'--'],...
+             SCM.e2_sg(:,kt),SCM.zp,ls)
     %     0.5*ww_sg2(:,kt),z,'k')
         ylim([0,zplottop])
         xlabel('SG tke (m^2/s^2)','fontsize',fs)
@@ -235,8 +235,8 @@ for kt = 1:4
         if icase == 1
             hold off
         end
-        plot(SCM_ww1(:,kt),SCM_zw,[ls,'--'],...
-             SCM_ww2(:,kt),SCM_zw,ls)
+        plot(SCM.ww1(:,kt),SCM.zw,[ls,'--'],...
+             SCM.ww2(:,kt),SCM.zw,ls)
         ylim([0,zplottop])
         xlabel('Res w var (m^2/s^2)','fontsize',fs)
         ylabel(' z(m) ','fontsize',fs)
@@ -250,8 +250,8 @@ for kt = 1:4
         if icase == 1
             hold off
         end
-        plot(SCM_ww_sg1(:,kt),SCM_zp,[ls,'--'],...
-             SCM_ww_sg2(:,kt),SCM_zp,ls)
+        plot(SCM.ww_sg1(:,kt),SCM.zp,[ls,'--'],...
+             SCM.ww_sg2(:,kt),SCM.zp,ls)
         ylim([0,zplottop])
         xlabel('SG w var (m^2/s^2)','fontsize',fs)
         ylabel(' z(m) ','fontsize',fs)
@@ -265,8 +265,8 @@ for kt = 1:4
         if icase == 1
             hold off
         end
-        plot(SCM_thth1(:,kt),SCM_zw,[ls,'--'],...
-             SCM_thth2(:,kt),SCM_zw,ls)
+        plot(SCM.thth1(:,kt),SCM.zw,[ls,'--'],...
+             SCM.thth2(:,kt),SCM.zw,ls)
         ylim([0,zplottop])
         xlabel('Res theta var (K^2)','fontsize',fs)
         ylabel(' z(m) ','fontsize',fs)
@@ -280,8 +280,8 @@ for kt = 1:4
         if icase == 1
             hold off
         end
-        plot(SCM_thth_sg1(:,kt),SCM_zw,[ls,'--'],...
-             SCM_thth_sg2(:,kt),SCM_zw,ls)
+        plot(SCM.thth_sg1(:,kt),SCM.zw,[ls,'--'],...
+             SCM.thth_sg2(:,kt),SCM.zw,ls)
         ylim([0,zplottop])
         xlabel('SG theta var (K^2)','fontsize',fs)
         ylabel(' z(m) ','fontsize',fs)
@@ -296,8 +296,8 @@ for kt = 1:4
         if icase == 1
             hold off
         end
-        plot(1e6*SCM_qq1(:,kt),SCM_zw,[ls,'--'],...
-             1e6*SCM_qq2(:,kt),SCM_zw,ls)
+        plot(1e6*SCM.qq1(:,kt),SCM.zw,[ls,'--'],...
+             1e6*SCM.qq2(:,kt),SCM.zw,ls)
         ylim([0,zplottop])
         xlabel('Res q or q_v var (g^2/kg^2)','fontsize',fs)
         ylabel(' z(m) ','fontsize',fs)
@@ -311,8 +311,8 @@ for kt = 1:4
         if icase == 1
             hold off
         end
-        plot(1e6*SCM_qq_sg1(:,kt),SCM_zw,[ls,'--'],...
-             1e6*SCM_qq_sg2(:,kt),SCM_zw,ls)
+        plot(1e6*SCM.qq_sg1(:,kt),SCM.zw,[ls,'--'],...
+             1e6*SCM.qq_sg2(:,kt),SCM.zw,ls)
         ylim([0,zplottop])
         xlabel('SG q or q_v var (g^2/kg^2)','fontsize',fs)
         ylabel(' z(m) ','fontsize',fs)
@@ -338,17 +338,17 @@ for icase = 1:ncase
     choose_case
 
     % Read SCM results
-    fname = ['SCM_',scheme];
+    fname = ['SCM.',scheme];
     load(fname);
 
     % Time
-    t = SCM_times(kt);
+    t = SCM.times(kt);
     % In hours
     t_hours = t/3600;
 
 
     % Time in hours for time series
-    SCM_time_ser_hours = SCM_time_ser/3600;
+    SCM.time_ser_hours = SCM.time_ser/3600;
 
     % Total cloud cover
     figure(3)
@@ -356,7 +356,7 @@ for icase = 1:ncase
     if icase == 1
         hold off
     end
-    plot(SCM_time_ser_hours,SCM_cldcov,ls)
+    plot(SCM.time_ser_hours,SCM.cldcov,ls)
     xlabel('Time','fontsize',fs)
     ylabel('Tot cld cov','fontsize',fs)
     title('Tot cld cov','fontsize',fs)
@@ -371,8 +371,8 @@ for icase = 1:ncase
     if icase == 1
         hold off
     end
-    plot(SCM_time_ser_hours,SCM_zctop ,ls,...
-         SCM_time_ser_hours,SCM_zcbase,[ls,'--'])
+    plot(SCM.time_ser_hours,SCM.zctop ,ls,...
+         SCM.time_ser_hours,SCM.zcbase,[ls,'--'])
     xlabel('Time','fontsize',fs)
     ylabel('Cld base/top','fontsize',fs)
     title('Cloud base/top','fontsize',fs)
