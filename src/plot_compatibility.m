@@ -11,3 +11,11 @@ if not(isfield(settings, "times_to_plot"))
     disp("No test case specified, plotting LES data for the ARM case");
     settings.times_to_plot = [32400];
 end
+
+% August 2021: Option to measure and output the RMSE error with sigma-weighted variables.
+% This is particularly important for tuning the model, by putting less weight on areas where
+% only a single cloud exists in the LES data (sometimes with extreme values).
+if not(isfield(settings, "sigma_weighted_rmse"))
+    disp("Using non-sigma-weighted profiles for RMSE calculation");
+    settings.sigma_weighted_rmse = false;
+end
