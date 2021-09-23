@@ -28,6 +28,7 @@ plot(LES.w_1(:,LES.i),LES.z,'b',SCM.w_1(:,SCM.i),SCM.zw,'b--',...
      LES.w_2(:,LES.i),LES.z,'r',SCM.w_2(:,SCM.i),SCM.zw,'r--')
 hold off
 xlim([-0.5,2.5])
+% xlim([-0.5,0.5])
 ylim([0,settings.zplottop])
 xlabel('w 1 and 2 (m/s)','fontsize',settings.fs)
 ylabel(' z(m) ','fontsize',settings.fs)
@@ -49,6 +50,7 @@ plot(LES.th_1(:,LES.i),LES.z,'b',SCM.th_1(:,SCM.i),SCM.zw,'b--',...
      LES.th_2(:,LES.i),LES.z,'r',SCM.th_2(:,SCM.i),SCM.zw,'r--')
 hold off
 xlim([300,320])
+% xlim([299.9,300.1])
 ylim([0,settings.zplottop])
 xlabel('\theta (K)','fontsize',settings.fs)
 ylabel(' z(m) ','fontsize',settings.fs)
@@ -91,6 +93,7 @@ plot(SCM.buoy(:,SCM.i),SCM.zw,'k--',...
      LES.b_2(:,LES.i),LES.z,'m', SCM.b_2_est(:,SCM.i),SCM.zw,'m--')
 hold off
 xlim([-0.1,0.05])
+% xlim([-0.002,0.002])
 ylim([0,settings.zplottop])
 xlabel('Buoyancy (m/s^2)','fontsize',settings.fs)
 ylabel(' z(m) ','fontsize',settings.fs)
