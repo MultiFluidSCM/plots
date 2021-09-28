@@ -8,7 +8,7 @@ weight_qv_2    = 0;
 weight_ql_2    = 1;
 weight_cloud   = 0;
 
-% weight_sigma_2 = 1;
+% weight_sigma_2 = 3;
 % weight_w_2     = 0;
 % weight_b_2     = 0;
 % weight_e_2     = 0;
