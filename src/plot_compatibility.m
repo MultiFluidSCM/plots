@@ -19,3 +19,45 @@ if not(isfield(settings, "sigma_weighted_rmse"))
     disp("Using non-sigma-weighted profiles for RMSE calculation");
     settings.sigma_weighted_rmse = false;
 end
+
+% October 2021: Added option to choose the variables and weights used for the RMSE calculation
+if not(isfield(settings, "weights"))
+    disp("No RMSE weights detected, using default weights instead.");
+    settings.weights = struct();
+end
+if not(isfield(settings.weights, "sigma_2"))
+    settings.weights.sigma_2 = 1;
+end
+if not(isfield(settings.weights, "b_2"))
+    settings.weights.b_2 = 1;
+end
+if not(isfield(settings.weights, "w_2"))
+    settings.weights.w_2 = 1;
+end
+if not(isfield(settings.weights, "ww_res2"))
+    settings.weights.ww_res2 = 1;
+end
+if not(isfield(settings.weights, "ww_sg2"))
+    settings.weights.ww_sg2 = 1;
+end
+if not(isfield(settings.weights, "e_2"))
+    settings.weights.e_2 = 1;
+end
+if not(isfield(settings.weights, "e_res2"))
+    settings.weights.e_res2 = 1;
+end
+if not(isfield(settings.weights, "e_sg2"))
+    settings.weights.e_sg2 = 1;
+end
+if not(isfield(settings.weights, "q_2"))
+    settings.weights.q_2 = 1;
+end
+if not(isfield(settings.weights, "qv_2"))
+    settings.weights.qv_2 = 1;
+end
+if not(isfield(settings.weights, "ql_2"))
+    settings.weights.ql_2 = 1;
+end
+if not(isfield(settings.weights, "cloud"))
+    settings.weights.cloud = 1;
+end

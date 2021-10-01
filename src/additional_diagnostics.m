@@ -42,6 +42,10 @@ SCM.thv_mean = SCM.th_mean.*(1 + 0.61*SCM.rv_mean - SCM.rl_mean);
 % Estimate of the buoyancy
 SCM.b_2_est = settings.gravity*(SCM.thv_2 - SCM.thv_mean)./SCM.thv_mean;
 
-% Total TKE
-SCM.e_1 = SCM.e1_res+SCM.e1_sg;
-SCM.e_2 = SCM.e2_res+SCM.e2_sg;
+% Total TKE and variance
+SCM.e_1 = SCM.e1_res + SCM.e1_sg;
+SCM.e_2 = SCM.e2_res + SCM.e2_sg;
+SCM.ww_res1 = SCM.ww1;
+SCM.ww_res2 = SCM.ww2;
+% SCM.ww_1 = SCM.ww_res1 + SCM.ww_sg1;
+% SCM.ww_2 = SCM.ww_res2 + SCM.ww_sg2;
