@@ -16,12 +16,12 @@ additional_diagnostics
 % Plot each profile for each saved time
 if settings.plot_individual_profiles & (settings.save_figures | settings.save_images)
     
-    % plot_individual_profiles
+    plot_individual_profiles
 
     % Combine individual profiles for multi-panel plots
     % Requires .fig files to be imported
     if settings.save_figures & settings.plot_combinations
-        % plot_profile_combinations
+        plot_profile_combinations
     end
 end
 
