@@ -2,7 +2,6 @@
 % This may help remove biases due to single plumes at the cloud top in the LES data
 if settings.sigma_weighted_rmse
     LES.w_2     = LES.w_2     .* LES.sigma_2;
-    LES.ww_2    = LES.ww_2    .* LES.sigma_2;
     LES.ww_res2 = LES.ww_res2 .* LES.sigma_2;
     LES.ww_sg2  = LES.ww_sg2  .* LES.sigma_2;
     LES.b_2     = LES.b_2     .* LES.sigma_2;

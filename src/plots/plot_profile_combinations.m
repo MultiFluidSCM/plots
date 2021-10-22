@@ -7,7 +7,7 @@ plot_timeseries_panels(settings, 'wb_2_res',  timeseries_indices);
 plot_timeseries_panels(settings, 'wqv_res', timeseries_indices);
 plot_timeseries_panels(settings, 'wqv_sg',  timeseries_indices);
 
-for kt = 1:length(settings.times_to_plot)
+for kt = 1:min(length(settings.times_to_plot), length(SCM.times))
     
     % Time
     t = settings.times_to_plot(kt);

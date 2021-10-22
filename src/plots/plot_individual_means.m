@@ -49,8 +49,8 @@ hold on
 plot(LES.th_1(:,LES.i),LES.z,'b',SCM.th_1(:,SCM.i),SCM.zw,'b--',...
      LES.th_2(:,LES.i),LES.z,'r',SCM.th_2(:,SCM.i),SCM.zw,'r--')
 hold off
-xlim([300,320])
-% xlim([299.9,300.1])
+% xlim([300,320])
+xlim([295,310])
 ylim([0,settings.zplottop])
 xlabel('\theta (K)','fontsize',settings.fs)
 ylabel(' z(m) ','fontsize',settings.fs)
@@ -71,7 +71,8 @@ hold on
 plot(LES.thv_1(:,LES.i),LES.z,'b',SCM.thv_1(:,SCM.i),SCM.zw,'b--',...
      LES.thv_2(:,LES.i),LES.z,'r',SCM.thv_2(:,SCM.i),SCM.zw,'r--')
 hold off
-xlim([300,320])
+% xlim([300,320])
+xlim([295,310])
 ylim([0,settings.zplottop])
 xlabel('\theta_v (K)','fontsize',settings.fs)
 ylabel(' z(m) ','fontsize',settings.fs)

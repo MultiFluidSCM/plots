@@ -1,6 +1,5 @@
 % Mean profiles
-for kt = 1:length(settings.times_to_plot)
-    
+for kt = 1:min(length(settings.times_to_plot), length(SCM.times))
     % Time
     t = settings.times_to_plot(kt);
     
