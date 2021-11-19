@@ -13,6 +13,9 @@ load_scm_data
 % Book-keeping and extra variables
 additional_diagnostics
 
+% Plot variable changes over time
+plot_timeseries
+
 % Plot each profile for each saved time
 if settings.plot_individual_profiles & (settings.save_figures | settings.save_images)
     
@@ -24,9 +27,6 @@ if settings.plot_individual_profiles & (settings.save_figures | settings.save_im
         plot_profile_combinations
     end
 end
-
-% Plot variable changes over time
-plot_timeseries
 
 % Get a measure of the difference between the SCM and LES data
 calculate_mean_rmse

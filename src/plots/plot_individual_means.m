@@ -49,8 +49,8 @@ hold on
 plot(LES.th_1(:,LES.i),LES.z,'b',SCM.th_1(:,SCM.i),SCM.zw,'b--',...
      LES.th_2(:,LES.i),LES.z,'r',SCM.th_2(:,SCM.i),SCM.zw,'r--')
 hold off
-% xlim([300,320])
-xlim([295,310])
+xlim([300,320])
+% xlim([295,310])
 ylim([0,settings.zplottop])
 xlabel('\theta (K)','fontsize',settings.fs)
 ylabel(' z(m) ','fontsize',settings.fs)
