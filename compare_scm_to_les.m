@@ -31,4 +31,6 @@ end
 % Get a measure of the difference between the SCM and LES data
 calculate_mean_rmse
 
+summary_statistics
+
 end
