@@ -61,3 +61,8 @@ end
 if not(isfield(settings.weights, "cloud"))
     settings.weights.cloud = 1;
 end
+
+% November 2021: Option to turn off cloud timeseries plots
+if not(isfield(settings, "plot_timeseries"))
+    settings.plot_timeseries = true;
+end
