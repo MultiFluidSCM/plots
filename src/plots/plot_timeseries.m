@@ -17,7 +17,7 @@ ylabel('Tot cld cov','fontsize',settings.fs)
 title('Tot cld cov','fontsize',settings.fs)
 set(gca,'fontsize',settings.fs,'XTick',[1:14])
 
-saveas(fig, fullfile(settings.folders.root,  join(["cloud_cover_",settings.folders.id,".png"], "")));
+saveas(fig, fullfile(settings.folders.outputs,  join(["cloud_cover_",settings.id,".png"], "")));
 save_figure(settings, fig, "timeseries_cloud_cover");
 
 fig = figure(4);
@@ -33,7 +33,7 @@ ylabel('Cld base/top','fontsize',settings.fs)
 title('Cloud base/top','fontsize',settings.fs)
 set(gca,'fontsize',settings.fs,'XTick',[1:14])
 
-saveas(fig, fullfile(settings.folders.root,  join(["cloud_height_",settings.folders.id,".png"], "")));
+saveas(fig, fullfile(settings.folders.outputs,  join(["cloud_height_",settings.id,".png"], "")));
 save_figure(settings, fig, "timeseries_cloud_height");
 
 
@@ -91,7 +91,7 @@ if isfield(SCM, 'cloud_fraction')
     cb.Label.String = 'Cloud fraction from fluid 1';
     caxis([levels(1), levels(end)]);
     
-    saveas(fig, fullfile(settings.folders.root,  join(["cloud_fraction1_",settings.folders.id,".png"], "")));
+    saveas(fig, fullfile(settings.folders.outputs,  join(["cloud_fraction1_",settings.id,".png"], "")));
     save_figure(settings, fig, "timeseries_cloud_fraction1");
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -139,7 +139,7 @@ if isfield(SCM, 'cloud_fraction')
     cb.Label.String = 'Cloud fraction from fluid 2';
     caxis([levels(1), levels(end)]);
     
-    saveas(fig, fullfile(settings.folders.root,  join(["cloud_fraction2_",settings.folders.id,".png"], "")));
+    saveas(fig, fullfile(settings.folders.outputs,  join(["cloud_fraction2_",settings.id,".png"], "")));
     save_figure(settings, fig, "timeseries_cloud_fraction2");
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -187,7 +187,7 @@ if isfield(SCM, 'cloud_fraction')
     cb.Label.String = 'Cloud fraction';
     caxis([levels(1), levels(end)]);
     
-    saveas(fig, fullfile(settings.folders.root,  join(["cloud_fraction_",settings.folders.id,".png"], "")));
+    saveas(fig, fullfile(settings.folders.outputs,  join(["cloud_fraction_",settings.id,".png"], "")));
     save_figure(settings, fig, "timeseries_cloud_fraction");
 end
 

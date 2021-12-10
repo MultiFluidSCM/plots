@@ -1,4 +1,4 @@
-function rmse_mean = compare_scm_to_les(settings)
+function summary = compare_scm_to_les(settings)
 % Compare SCM results with LES
 
 % Data are from LES of ARM case (Brown et al.)
