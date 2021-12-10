@@ -3,7 +3,7 @@
 % at heights zi (m)
 % for 4 times given by time_s (seconds from the start of the simulation)
 
-SCM_temp = load(settings.scm_data);
+SCM_temp = load(fullfile(settings.folders.data_scm, '2FSCM_results.mat'));
 
 % Compatibility for older data files.
 % Remove the "SCM_" from the variable names

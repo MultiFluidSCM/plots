@@ -1,4 +1,4 @@
-function rmse_mean = compare_scm_to_les(settings)
+function summary = compare_scm_to_les(settings)
 % Compare SCM results with LES
 
 % Data are from LES of ARM case (Brown et al.)
@@ -14,7 +14,9 @@ load_scm_data
 additional_diagnostics
 
 % Plot variable changes over time
-plot_timeseries
+if settings.plot_timeseries
+    plot_timeseries
+end
 
 % Plot each profile for each saved time
 if settings.plot_individual_profiles & (settings.save_figures | settings.save_images)
