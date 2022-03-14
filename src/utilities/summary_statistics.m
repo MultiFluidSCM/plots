@@ -120,6 +120,16 @@ for kt = 1:min(length(settings.times_to_plot), length(SCM.times))
     summary.profiles_max_ql_2(kt) = max(SCM.ql_2(:,SCM.i));
     summary.profiles_max_e1_sg(kt) = max(SCM.e1_sg(:,SCM.i));
     summary.profiles_max_e2_sg(kt) = max(SCM.e2_sg(:,SCM.i));
+    summary.profiles_max_qq_sg1(kt) = max(SCM.qq_sg1(:,SCM.i));
+    summary.profiles_max_qq_sg2(kt) = max(SCM.qq_sg2(:,SCM.i));
+    summary.profiles_max_thth_sg1(kt) = max(SCM.thth_sg1(:,SCM.i));
+    summary.profiles_max_thth_sg2(kt) = max(SCM.thth_sg2(:,SCM.i));
+    summary.profiles_max_sigma_e1_sg(kt) = max(SCM.sigma1(:,SCM.i).*SCM.e1_sg(:,SCM.i));
+    summary.profiles_max_sigma_e2_sg(kt) = max(SCM.sigma2(:,SCM.i).*SCM.e2_sg(:,SCM.i));
+    summary.profiles_max_sigma_qq_sg1(kt) = max(SCM.sigma1(:,SCM.i).*SCM.qq_sg1(:,SCM.i));
+    summary.profiles_max_sigma_qq_sg2(kt) = max(SCM.sigma2(:,SCM.i).*SCM.qq_sg2(:,SCM.i));
+    summary.profiles_max_sigma_thth_sg1(kt) = max(SCM.sigma1w(:,SCM.i).*SCM.thth_sg1(:,SCM.i));
+    summary.profiles_max_sigma_thth_sg2(kt) = max(SCM.sigma2w(:,SCM.i).*SCM.thth_sg2(:,SCM.i));
     
 end
 
