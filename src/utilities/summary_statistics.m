@@ -25,6 +25,8 @@ summary.variation_cloud_base = 0;
 summary.variation_cloud_top  = 0;
 summary.total_t_cloud = 0;
 summary.total_i_cloud = 0;
+summary.t_cloud_start = 0;
+summary.t_cloud_stop  = 0;
 
 new.t = -1;
 new.z_cloud_base = 0;
@@ -42,6 +44,11 @@ for kt = 1:min(length(SCM.time_ser))
     
     if new.z_cloud_base > 100
         summary.total_i_cloud = summary.total_i_cloud + 1;
+        
+        if summary.t_cloud_stop == 0
+            summary.t_cloud_start = new.t;
+        end
+        summary.t_cloud_stop = new.t;
         
         % Vertical integration of cloud fraction
         cloud_fractionp = SCM.cloud_fraction(1:length(SCM.zp),kt) + SCM.cloud_fraction(2:length(SCM.zw),kt);
@@ -81,6 +88,8 @@ disp(" ");
 disp("CLOUD STATISTICS SUMMARY");
 if summary.total_i_cloud >= 2
     disp(sprintf('Total cloud life:  %0.2f hrs (steps: %0.0f)', summary.total_t_cloud/3600, summary.total_i_cloud));
+    disp(sprintf('Mean cloud start:  %0.2f hrs', summary.t_cloud_start/3600));
+    disp(sprintf('Mean cloud stop:   %0.2f hrs', summary.t_cloud_stop/3600));
     disp(sprintf('Mean cloud frac:   %0.6f', summary.mean_cloud_fraction));
     disp(sprintf('Mean cloud base:   %0.2f km', summary.mean_z_cloud_base/1000));
     disp(sprintf('Mean cloud top:    %0.2f km', summary.mean_z_cloud_top /1000));
@@ -92,6 +101,42 @@ else
 end
 % -------------------------------------------------------- %
 % END OF CLOUD STATISTICS
+% -------------------------------------------------------- %
+
+
+% -------------------------------------------------------- %
+% START OF VERTICAL PROFILE STATISTICS
+% -------------------------------------------------------- %
+for kt = 1:min(length(settings.times_to_plot), length(SCM.times))
+    t = settings.times_to_plot(kt);
+    [SCM.t, SCM.i] = min(abs(SCM.times - t));
+    
+    summary.profiles_t(kt) = t;
+    summary.profiles_min_theta_1(kt) = min(SCM.th_1(:,SCM.i));
+    summary.profiles_min_theta_2(kt) = min(SCM.th_2(:,SCM.i));
+    summary.profiles_max_q_1(kt) = max(SCM.q_1(:,SCM.i));
+    summary.profiles_max_q_2(kt) = max(SCM.q_2(:,SCM.i));
+    summary.profiles_max_qv_1(kt) = max(SCM.qv_1(:,SCM.i));
+    summary.profiles_max_qv_2(kt) = max(SCM.qv_2(:,SCM.i));
+    summary.profiles_max_ql_1(kt) = max(SCM.ql_1(:,SCM.i));
+    summary.profiles_max_ql_2(kt) = max(SCM.ql_2(:,SCM.i));
+    summary.profiles_max_e1_sg(kt) = max(SCM.e1_sg(:,SCM.i));
+    summary.profiles_max_e2_sg(kt) = max(SCM.e2_sg(:,SCM.i));
+    summary.profiles_max_qq_sg1(kt) = max(SCM.qq_sg1(:,SCM.i));
+    summary.profiles_max_qq_sg2(kt) = max(SCM.qq_sg2(:,SCM.i));
+    summary.profiles_max_thth_sg1(kt) = max(SCM.thth_sg1(:,SCM.i));
+    summary.profiles_max_thth_sg2(kt) = max(SCM.thth_sg2(:,SCM.i));
+    summary.profiles_max_sigma_e1_sg(kt) = max(SCM.sigma1(:,SCM.i).*SCM.e1_sg(:,SCM.i));
+    summary.profiles_max_sigma_e2_sg(kt) = max(SCM.sigma2(:,SCM.i).*SCM.e2_sg(:,SCM.i));
+    summary.profiles_max_sigma_qq_sg1(kt) = max(SCM.sigma1(:,SCM.i).*SCM.qq_sg1(:,SCM.i));
+    summary.profiles_max_sigma_qq_sg2(kt) = max(SCM.sigma2(:,SCM.i).*SCM.qq_sg2(:,SCM.i));
+    summary.profiles_max_sigma_thth_sg1(kt) = max(SCM.sigma1w(:,SCM.i).*SCM.thth_sg1(:,SCM.i));
+    summary.profiles_max_sigma_thth_sg2(kt) = max(SCM.sigma2w(:,SCM.i).*SCM.thth_sg2(:,SCM.i));
+    
+end
+
+% -------------------------------------------------------- %
+% END OF VERTICAL PROFILE STATISTICS
 % -------------------------------------------------------- %
 
 % Write summary statistics to file
