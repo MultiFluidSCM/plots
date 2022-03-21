@@ -88,8 +88,8 @@ disp(" ");
 disp("CLOUD STATISTICS SUMMARY");
 if summary.total_i_cloud >= 2
     disp(sprintf('Total cloud life:  %0.2f hrs (steps: %0.0f)', summary.total_t_cloud/3600, summary.total_i_cloud));
-    disp(sprintf('Mean cloud start:  %0.0f hrs', summary.t_cloud_start/3600));
-    disp(sprintf('Mean cloud stop:   %0.0f hrs', summary.t_cloud_stop/3600));
+    disp(sprintf('Mean cloud start:  %0.2f hrs', summary.t_cloud_start/3600));
+    disp(sprintf('Mean cloud stop:   %0.2f hrs', summary.t_cloud_stop/3600));
     disp(sprintf('Mean cloud frac:   %0.6f', summary.mean_cloud_fraction));
     disp(sprintf('Mean cloud base:   %0.2f km', summary.mean_z_cloud_base/1000));
     disp(sprintf('Mean cloud top:    %0.2f km', summary.mean_z_cloud_top /1000));
